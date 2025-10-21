@@ -122,8 +122,6 @@ aws ec2 assign-private-ip-addresses \
 
 **Key Learning:** Cloud provider networking requires proper API registration, not just OS-level configuration.
 
-📖 [Read full troubleshooting article](docs/troubleshooting-aws-networking.md)
-
 ## 📊 Results & Metrics
 
 | Metric | Value |
