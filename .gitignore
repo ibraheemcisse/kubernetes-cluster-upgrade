@@ -1,0 +1,21 @@
+# Sensitive data
+*.pem
+*.key
+*_rsa
+*id_rsa*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Compressed archives (optional - you might want to include the tarball)
+# *.tar.gz
+# *.zip
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Large binary files
+*.bin

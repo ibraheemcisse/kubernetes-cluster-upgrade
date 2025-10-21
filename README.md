@@ -1,120 +1,141 @@
-# Kubernetes Cluster Upgrade Project
+# Kubernetes Cluster Upgrade: v1.29 → v1.30.14
 
-## Executive Summary
-Successfully upgraded a 3-node production-style Kubernetes cluster from version 1.29.x to 1.30.14 with zero downtime, following official Kubernetes documentation and best practices.
+[![Kubernetes](https://img.shields.io/badge/kubernetes-v1.30.14-326CE5?logo=kubernetes)](https://kubernetes.io/)
+[![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?logo=amazon-aws)](https://aws.amazon.com/ec2/)
+[![Status](https://img.shields.io/badge/upgrade-success-brightgreen)](/)
+[![Downtime](https://img.shields.io/badge/downtime-0%20seconds-blue)](/)
 
-**Project Date:** October 21, 2025  
-**Total Duration:** ~90 minutes  
-**Methodology:** Rolling upgrade (control plane → workers)  
-**Documentation Lines:** 735 lines of terminal capture
+> A production-style Kubernetes cluster upgrade demonstrating zero-downtime operations, systematic troubleshooting, and comprehensive documentation practices.
 
----
+## 🎯 Project Overview
 
-## Cluster Architecture
+Successfully upgraded a 3-node Kubernetes cluster from version 1.29 to 1.30.14 with zero downtime, following official Kubernetes documentation and enterprise best practices.
 
-### Infrastructure
-- **Cloud Provider:** AWS EC2
-- **Topology:** Multi-AZ (us-east-1a, us-east-1b)
-- **Control Plane:** 1 node
-- **Worker Nodes:** 2 nodes
-- **CNI:** Calico
-- **Applications:** nginx, evershop e-commerce platform, PostgreSQL
+**Key Achievements:**
+- ✅ Zero-downtime rolling upgrade
+- ✅ Multi-AZ AWS deployment
+- ✅ Comprehensive documentation (735 lines of terminal capture)
+- ✅ Automated state tracking using ConfigMaps
+- ✅ Resolved complex AWS networking challenge
 
-### Network Configuration
-- **VPC:** vpc-0bc53c73a3d679762
-- **Security Groups:** Properly configured for cross-AZ communication
-- **Special Challenge:** Secondary IP routing (documented separately)
-
----
-
-## Upgrade Process
-
-### Phase 1: Control Plane
+## 🏗️ Architecture
 ```
+┌─────────────────────────────────────────────┐
+│  AWS VPC (vpc-0bc53c73a3d679762)           │
+│                                             │
+│  ┌──────────────────┐  ┌─────────────────┐ │
+│  │  AZ: us-east-1a  │  │  AZ: us-east-1b │ │
+│  │  ┌────────────┐  │  │  ┌────────────┐ │ │
+│  │  │ Master     │  │  │  │ Worker 1   │ │ │
+│  │  │ v1.30.14   │◄─┼──┼─►│ v1.30.14   │ │ │
+│  │  └────────────┘  │  │  └────────────┘ │ │
+│  │                  │  │  ┌────────────┐ │ │
+│  │                  │  │  │ Worker 2   │ │ │
+│  │                  │  │  │ v1.30.14   │ │ │
+│  │                  │  │  └────────────┘ │ │
+│  └──────────────────┘  └─────────────────┘ │
+└─────────────────────────────────────────────┘
+```
+
+### Infrastructure Details
+- **Platform:** Self-managed Kubernetes on AWS EC2
+- **Control Plane:** 1 master node
+- **Workers:** 2 nodes across different availability zones
+- **CNI:** Calico
+- **Applications:** nginx, evershop e-commerce, PostgreSQL
+
+## 📋 Upgrade Process
+
+### Phase 1: Control Plane (Master Node)
+```bash
 Version: 1.29.15 → 1.30.14
 Duration: ~30 minutes
 Status: ✅ Success
 ```
 
-**Steps Completed:**
-1. Added v1.30 Kubernetes repository
+1. Added Kubernetes v1.30 repository
 2. Upgraded kubeadm to v1.30.14
-3. Reviewed upgrade plan
+3. Reviewed upgrade plan (`kubeadm upgrade plan`)
 4. Applied control plane upgrade
 5. Upgraded kubelet and kubectl
 6. Verified all control plane components
 
 ### Phase 2: Worker Nodes
-```
-Worker 1 (ip-172-31-28-145): 1.29.6 → 1.30.14 ✅
-Worker 2 (ip-172-31-25-165): 1.29.6 → 1.30.14 ✅
+```bash
+Worker 1: 1.29.6 → 1.30.14 ✅
+Worker 2: 1.29.6 → 1.30.14 ✅
 Duration: ~30 minutes each
 ```
 
-**Steps per Worker:**
-1. Drained node (workloads migrated to other nodes)
-2. Added v1.30 repository
-3. Upgraded kubeadm, kubelet, kubectl
-4. Ran node upgrade procedure
-5. Uncordoned node
-6. Verified successful upgrade
+Each worker upgraded using rolling deployment strategy:
+- Drained node (workloads migrated automatically)
+- Upgraded components
+- Uncordoned node
+- Verified health
 
----
-
-## Technical Skills Demonstrated
+## 🔧 Technical Skills Demonstrated
 
 ### Kubernetes Administration
-- ✅ Cluster upgrades using kubeadm
-- ✅ Control plane management
-- ✅ Node lifecycle operations (cordon/drain/uncordon)
-- ✅ Pod migration and rescheduling
-- ✅ ConfigMap management for state tracking
+- Cluster upgrades using kubeadm
+- Control plane component management
+- Node lifecycle operations (cordon/drain/uncordon)
+- Pod migration and rescheduling
+- ConfigMap-based state management
 
-### High Availability Practices
-- ✅ Zero-downtime upgrades
-- ✅ Rolling deployment strategies
-- ✅ Workload distribution across nodes
-- ✅ Health checks and verification
+### Cloud Infrastructure (AWS)
+- Multi-AZ deployment architecture
+- VPC networking configuration
+- Security group management
+- ENI secondary IP addressing
+- Cross-AZ communication troubleshooting
 
-### AWS Cloud Integration
-- ✅ Multi-AZ deployment
-- ✅ VPC networking
-- ✅ Security group configuration
-- ✅ EC2 instance management
-- ✅ ENI secondary IP configuration
+### DevOps Practices
+- Zero-downtime deployment strategies
+- Comprehensive documentation
+- Systematic troubleshooting methodology
+- Following official documentation
+- Automated state tracking
 
-### DevOps Best Practices
-- ✅ Following official documentation
-- ✅ Comprehensive logging (735 lines)
-- ✅ State tracking at each milestone
-- ✅ Systematic troubleshooting
-- ✅ Documentation as code (ConfigMaps)
+## 🐛 Challenges & Solutions
 
----
+### Challenge: Workers Unable to Join Cluster
 
-## Challenges Overcome
+**Problem:** Worker nodes in different availability zone couldn't reach master's Kubernetes API server.
 
-### Challenge: Workers Unable to Join Cluster Initially
-**Problem:** Workers in different availability zone couldn't reach master's Kubernetes API
+**Investigation:**
+```bash
+# Workers could reach primary IP
+ping 172.31.82.189  # ✅ Success
 
-**Root Cause:** Secondary IP address (172.31.89.68) not registered with AWS ENI
+# But not the secondary IP used by K8s API
+ping 172.31.89.68   # ❌ Failed
+```
 
-**Solution:** Used AWS CLI to properly assign secondary IP to network interface
+**Root Cause:** Secondary IP address was added at OS level but not registered with AWS ENI.
+
+**Solution:**
 ```bash
 aws ec2 assign-private-ip-addresses \
   --network-interface-id eni-054cab4e32bf4c5fc \
   --private-ip-addresses 172.31.89.68
 ```
 
-**Key Learning:** Cloud provider networking requires proper registration through APIs, not just OS-level configuration
+**Key Learning:** Cloud provider networking requires proper API registration, not just OS-level configuration.
 
-[Full troubleshooting article →](link-to-article)
+📖 [Read full troubleshooting article](docs/troubleshooting-aws-networking.md)
 
----
+## 📊 Results & Metrics
 
-## Verification Results
+| Metric | Value |
+|--------|-------|
+| **Total Upgrade Time** | ~90 minutes |
+| **Application Downtime** | 0 seconds |
+| **Pods Migrated** | 6 |
+| **Failed Attempts** | 0 |
+| **Rollbacks Required** | 0 |
+| **Documentation Lines** | 735 |
 
-### Final Node Status
+### Final Verification
 ```
 NAME               STATUS   ROLES           VERSION
 master             Ready    control-plane   v1.30.14
@@ -122,113 +143,80 @@ ip-172-31-28-145   Ready    <none>          v1.30.14
 ip-172-31-25-165   Ready    <none>          v1.30.14
 ```
 
-### All Workloads Healthy
-- ✅ System pods: All running
-- ✅ Application pods: All running
-- ✅ No failed containers
-- ✅ No pod restarts (except expected during migration)
+## 📁 Repository Structure
+```
+.
+├── README.md                      # This file
+├── logs/
+│   └── upgrade-session.log        # Complete terminal capture (735 lines)
+├── cluster-states/
+│   ├── master-upgrade.yaml        # Post-master upgrade state
+│   ├── final-state.yaml           # Final cluster state
+│   └── complete-cluster-snapshot.yaml
+├── docs/
+│   ├── troubleshooting-aws-networking.md
+│   └── upgrade-procedure.md
+├── screenshots/
+│   ├── pre-upgrade.png
+│   └── post-upgrade.png
+└── QUICK_START.md                 # Quick reference guide
+```
 
-### Metrics
-| Metric | Value |
-|--------|-------|
-| Total Upgrade Time | ~90 minutes |
-| Application Downtime | 0 seconds |
-| Pods Migrated | 6 |
-| Failed Upgrades | 0 |
-| Rollbacks Required | 0 |
+## 🚀 Quick Start
 
----
-
-## Documentation Artifacts
-
-### Generated Files
-1. **Complete Terminal Log** (735 lines)
-   - Every command executed
-   - All output captured
-   - Timestamps included
-
-2. **Cluster State ConfigMaps**
-   - Pre-upgrade state
-   - Post-master upgrade
-   - Post-worker upgrades
-   - Final state
-
-3. **Resource Exports**
-   - All cluster resources (YAML)
-   - Node configurations
-   - Pod manifests
-
-### Stored in Cluster
+### View Complete Upgrade Log
 ```bash
-# View all documentation
-kubectl get configmap -n upgrade-docs
-
-# ConfigMaps created:
-# - master-upgraded-to-v1.30.14
-# - post-upgrade-complete
-# - final-upgrade-state
+cat logs/upgrade-session-20251021-083000.log
 ```
 
----
+### Examine Cluster States
+```bash
+# Pre-upgrade state
+cat cluster-states/pre-upgrade.yaml
 
-## Key Takeaways
-
-1. **Planning is Critical**: Understanding the upgrade path and prerequisites prevents issues
-
-2. **Documentation is Essential**: Real-time logging captures valuable troubleshooting information
-
-3. **Cloud Networking Differs from Traditional**: AWS requires proper resource registration
-
-4. **Official Documentation Works**: Following Kubernetes docs ensures reliable upgrades
-
-5. **Zero-Downtime is Achievable**: Proper use of cordon/drain enables seamless upgrades
-
----
-
-## Repository Structure
-
-```
-kubernetes-upgrade-project/
-├── README.md                           (This file)
-├── upgrade-session-20251021-083000.log (Complete terminal capture)
-├── upgrade-configmaps.yaml             (All cluster state saves)
-├── troubleshooting-article.md          (AWS networking challenge)
-└── screenshots/
-    ├── pre-upgrade-nodes.png
-    ├── upgrade-in-progress.png
-    └── post-upgrade-complete.png
+# Final state
+cat cluster-states/final-state.yaml
 ```
 
----
+### Apply ConfigMaps to Your Cluster
+```bash
+kubectl apply -f cluster-states/
+```
 
-## Technologies Used
+## 🛠️ Technologies Used
 
-- Kubernetes 1.29 → 1.30.14
-- kubeadm
-- AWS EC2
-- Calico CNI
-- Ubuntu 22.04
-- kubectl
-- Docker/containerd
+- **Kubernetes** 1.29 → 1.30.14
+- **kubeadm** - Cluster lifecycle management
+- **AWS EC2** - Compute infrastructure
+- **Calico** - Container networking (CNI)
+- **Ubuntu** 22.04 LTS
+- **kubectl** - Kubernetes CLI
+- **containerd** - Container runtime
 
----
+## 📚 References & Resources
 
-## Links
+- [Official Kubernetes Upgrade Documentation](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+- [Kubernetes 1.30 Release Notes](https://kubernetes.io/blog/2024/04/17/kubernetes-v1-30-release/)
+- [AWS VPC Networking Guide](https://docs.aws.amazon.com/vpc/)
 
-- **GitHub Repository:** [Your repo link]
-- **LinkedIn Article:** [Your article link]
-- **Related Projects:** [Other K8s work]
+## 💡 Key Takeaways
 
----
+1. **Planning Prevents Issues** - Understanding upgrade paths and prerequisites is crucial
+2. **Documentation is Essential** - Real-time logging captures invaluable troubleshooting information
+3. **Cloud ≠ Traditional Infrastructure** - Cloud providers require proper resource registration through APIs
+4. **Official Docs Work** - Following Kubernetes documentation ensures reliable upgrades
+5. **Zero-Downtime is Achievable** - Proper use of cordon/drain enables seamless production upgrades
 
-## Contact
+## 🤝 Connect
 
 **[Your Name]**  
-[Email] | [LinkedIn] | [GitHub]
-
-*This project demonstrates production-ready Kubernetes administration skills and cloud infrastructure management capabilities.*
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](your-linkedin-url)
+[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:your-email)
 
 ---
 
-**Completion Date:** Tue Oct 21 09:04:49 UTC 2025  
-**Total Project Time:** ~4 hours (including troubleshooting and documentation)
+⭐ **Star this repository if you found it helpful!**
+
+📝 **Questions or suggestions?** Open an issue or reach out!
+
+*This project demonstrates production-ready Kubernetes administration and cloud infrastructure management capabilities.*
