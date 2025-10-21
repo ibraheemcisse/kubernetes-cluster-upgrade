@@ -207,7 +207,7 @@ kubectl apply -f cluster-states/
 
 ## 🤝 Connect
 
-**[Ibrahim Cisse]**  
+**Ibrahim Cisse**  
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/ibraheemcisse)
 [![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](ibrahimcisse@ioc-labs.com)
 
