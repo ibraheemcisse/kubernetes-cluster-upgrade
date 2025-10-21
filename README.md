@@ -210,8 +210,8 @@ kubectl apply -f cluster-states/
 ## 🤝 Connect
 
 **[Your Name]**  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](your-linkedin-url)
-[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:your-email)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/ibraheemcisse)
+[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](ibrahimcisse@ioc-labs.com)
 
 ---
 
