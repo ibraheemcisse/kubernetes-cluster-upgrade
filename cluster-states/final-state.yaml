@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  completion-time: Tue Oct 21 09:00:30 UTC 2025
+  master-version: v1.30.14
+  status: SUCCESS
+  timestamp: Tue Oct 21 09:00:30 UTC 2025
+  worker1-version: v1.30.14
+  worker2-version: v1.30.14
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-10-21T09:00:31Z"
+  name: final-upgrade-state
+  namespace: upgrade-docs
+  resourceVersion: "250933"
+  uid: 6295f3c7-1178-41f3-af8e-c7cb1238bfb3

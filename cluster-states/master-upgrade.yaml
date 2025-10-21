@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  node-version: v1.30.14
+  status: success
+  timestamp: Tue Oct 21 08:48:51 UTC 2025
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-10-21T08:48:51Z"
+  name: master-upgraded-to-v1.30.14
+  namespace: upgrade-docs
+  resourceVersion: "249584"
+  uid: 68a497c3-d716-4991-99a2-5fa7a965c17f

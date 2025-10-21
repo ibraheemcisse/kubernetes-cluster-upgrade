@@ -1,0 +1,5117 @@
+apiVersion: v1
+data:
+  post-upgrade-complete.yaml: |
+    apiVersion: v1
+    items:
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          cni.projectcalico.org/containerID: 917934a74481a4244c701b7c8d0171623ce0bf065cd7344034b655cb24262881
+          cni.projectcalico.org/podIP: 192.168.172.132/32
+          cni.projectcalico.org/podIPs: 192.168.172.132/32
+        creationTimestamp: "2025-10-21T08:49:44Z"
+        generateName: nginx-7854ff8877-
+        labels:
+          app: nginx
+          pod-template-hash: 7854ff8877
+        name: nginx-7854ff8877-7xvpj
+        namespace: default
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: ReplicaSet
+          name: nginx-7854ff8877
+          uid: 26a94c39-268a-403e-8c97-7dad7d7037a7
+        resourceVersion: "249865"
+        uid: fb91c5dd-3823-4df8-90f4-4ee7f9827222
+      spec:
+        containers:
+        - image: nginx
+          imagePullPolicy: Always
+          name: nginx
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-j664f
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        nodeName: ip-172-31-25-165
+        preemptionPolicy: PreemptLowerPriority
+        priority: 0
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 300
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 300
+        volumes:
+        - name: kube-api-access-j664f
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:50:05Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:50:05Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:50:05Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://f7d7faf20c012d64543b3b4672eb8fa608ec2091c3fd1e5ca823296756b5577c
+          image: docker.io/library/nginx:latest
+          imageID: docker.io/library/nginx@sha256:adf382fc753c14b1d584b45fb4ecf2c469dcd5b25a25a299540b9db418049b12
+          lastState: {}
+          name: nginx
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:50:04Z"
+        hostIP: 172.31.25.165
+        hostIPs:
+        - ip: 172.31.25.165
+        phase: Running
+        podIP: 192.168.172.132
+        podIPs:
+        - ip: 192.168.172.132
+        qosClass: BestEffort
+        startTime: "2025-10-21T08:49:44Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          cni.projectcalico.org/containerID: 88312605b892cc2d7253a670c7f0286e5e92e9b03c046c4b0db6522ec913e9ec
+          cni.projectcalico.org/podIP: 192.168.172.131/32
+          cni.projectcalico.org/podIPs: 192.168.172.131/32
+        creationTimestamp: "2025-10-21T08:49:44Z"
+        generateName: evershop-577fd77b7d-
+        labels:
+          app: evershop
+          pod-template-hash: 577fd77b7d
+        name: evershop-577fd77b7d-zwrwj
+        namespace: evershop
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: ReplicaSet
+          name: evershop-577fd77b7d
+          uid: fe812631-26a8-42c3-9a91-e9623cb4904a
+        resourceVersion: "250448"
+        uid: a9ce7649-4d8c-475d-b2fb-a4b18b484e3d
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            value: postgres
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: postgres
+          - name: DB_PASSWORD
+            value: postgres
+          - name: DB_NAME
+            value: postgres
+          image: evershop/evershop:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: evershop
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-jxqwq
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        nodeName: ip-172-31-25-165
+        preemptionPolicy: PreemptLowerPriority
+        priority: 0
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 300
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 300
+        volumes:
+        - name: kube-api-access-jxqwq
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:59Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:17Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:17Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://9634d135937006c34c4c2c22f66b3433330942e0119728230c046f3bae438dd8
+          image: docker.io/evershop/evershop:latest
+          imageID: docker.io/evershop/evershop@sha256:c2c0334bb9b945419e32c250f954f01d16eacc41cc20840454d0fdf46b12c418
+          lastState:
+            terminated:
+              containerID: containerd://2c51ea4dee1bb59daa2f2df1a6ead0666572447a8b445abbd2c08bc13e1bc6c4
+              exitCode: 0
+              finishedAt: "2025-10-21T08:50:08Z"
+              reason: Completed
+              startedAt: "2025-10-21T08:49:58Z"
+          name: evershop
+          ready: true
+          restartCount: 1
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:50:13Z"
+        hostIP: 172.31.25.165
+        hostIPs:
+        - ip: 172.31.25.165
+        phase: Running
+        podIP: 192.168.172.131
+        podIPs:
+        - ip: 192.168.172.131
+        qosClass: Burstable
+        startTime: "2025-10-21T08:49:44Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          cni.projectcalico.org/containerID: 3b4a8bc59b5ef5e8a7c58caecfcd628ba18b2e5034212bb9441bbbc9c07b65e4
+          cni.projectcalico.org/podIP: 192.168.172.133/32
+          cni.projectcalico.org/podIPs: 192.168.172.133/32
+        creationTimestamp: "2025-10-21T08:49:44Z"
+        generateName: postgres-ffc667b5d-
+        labels:
+          app: postgres
+          pod-template-hash: ffc667b5d
+        name: postgres-ffc667b5d-5fwlm
+        namespace: evershop
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: ReplicaSet
+          name: postgres-ffc667b5d
+          uid: 0026de59-4fff-4c73-861c-7c923517e5d9
+        resourceVersion: "249890"
+        uid: 44432700-c65f-4c61-88d6-f1943dcda3b2
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_DB
+            value: postgres
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          image: postgres:16
+          imagePullPolicy: IfNotPresent
+          name: postgres
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-storage
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-6k567
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        nodeName: ip-172-31-25-165
+        preemptionPolicy: PreemptLowerPriority
+        priority: 0
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 300
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 300
+        volumes:
+        - hostPath:
+            path: /mnt/data/postgres
+            type: DirectoryOrCreate
+          name: postgres-storage
+        - name: kube-api-access-6k567
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:50:13Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:50:13Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:50:13Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://d2e0b3edaeda8e5b913cd585ad4e703678c00ae58de08c5c25d1f7b0137b903e
+          image: docker.io/library/postgres:16
+          imageID: docker.io/library/postgres@sha256:029f480c232c94a0a0f9828efd522ac58c36a1ebedbd459fc31245971a073b6d
+          lastState: {}
+          name: postgres
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:50:13Z"
+        hostIP: 172.31.25.165
+        hostIPs:
+        - ip: 172.31.25.165
+        phase: Running
+        podIP: 192.168.172.133
+        podIPs:
+        - ip: 192.168.172.133
+        qosClass: BestEffort
+        startTime: "2025-10-21T08:49:44Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          cni.projectcalico.org/containerID: 246c5b71280c090c77d6b3ad91f93a5a81fbcd1f5584535aeb1431d8c8a3cf1e
+          cni.projectcalico.org/podIP: 192.168.219.75/32
+          cni.projectcalico.org/podIPs: 192.168.219.75/32
+        creationTimestamp: "2025-10-21T08:49:44Z"
+        generateName: calico-kube-controllers-8d76c5f9b-
+        labels:
+          k8s-app: calico-kube-controllers
+          pod-template-hash: 8d76c5f9b
+        name: calico-kube-controllers-8d76c5f9b-crmqf
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: ReplicaSet
+          name: calico-kube-controllers-8d76c5f9b
+          uid: e29afd7c-d8f2-4c54-8820-316c88d18860
+        resourceVersion: "249811"
+        uid: 15d60cb6-6cc6-4949-ac5a-85be9299638d
+      spec:
+        containers:
+        - env:
+          - name: ENABLED_CONTROLLERS
+            value: node
+          - name: DATASTORE_TYPE
+            value: kubernetes
+          image: docker.io/calico/kube-controllers:v3.28.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - /usr/bin/check-status
+              - -l
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: calico-kube-controllers
+          readinessProbe:
+            exec:
+              command:
+              - /usr/bin/check-status
+              - -r
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-vv2hn
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        nodeName: master
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000000000
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: calico-kube-controllers
+        serviceAccountName: calico-kube-controllers
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 300
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 300
+        volumes:
+        - name: kube-api-access-vv2hn
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:45Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:45Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:45Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://27bb453e14ae43436d336ba0bd7b969333afd4546bfe0ea65810277284569397
+          image: docker.io/calico/kube-controllers:v3.28.0
+          imageID: docker.io/calico/kube-controllers@sha256:8f04e4772a2b3fa752bc7fb98cc89c7fa0ab88a341115ee8c5b6faa4180053fd
+          lastState: {}
+          name: calico-kube-controllers
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:49:45Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 192.168.219.75
+        podIPs:
+        - ip: 192.168.219.75
+        qosClass: BestEffort
+        startTime: "2025-10-21T08:49:44Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        creationTimestamp: "2025-10-21T06:32:48Z"
+        generateName: calico-node-
+        labels:
+          controller-revision-hash: 5ff8964bd4
+          k8s-app: calico-node
+          pod-template-generation: "1"
+        name: calico-node-gcxlw
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: DaemonSet
+          name: calico-node
+          uid: 5a251725-7564-4830-b844-758eaf73f0d7
+        resourceVersion: "250441"
+        uid: 75765d6f-b4e8-44e5-8f5c-7556e30cc164
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchFields:
+                - key: metadata.name
+                  operator: In
+                  values:
+                  - ip-172-31-28-145
+        containers:
+        - env:
+          - name: DATASTORE_TYPE
+            value: kubernetes
+          - name: WAIT_FOR_DATASTORE
+            value: "true"
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CALICO_NETWORKING_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: calico_backend
+                name: calico-config
+          - name: CLUSTER_TYPE
+            value: k8s,bgp
+          - name: IP
+            value: autodetect
+          - name: CALICO_IPV4POOL_IPIP
+            value: Always
+          - name: CALICO_IPV4POOL_VXLAN
+            value: Never
+          - name: CALICO_IPV6POOL_VXLAN
+            value: Never
+          - name: FELIX_IPINIPMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: FELIX_VXLANMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: FELIX_WIREGUARDMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: CALICO_DISABLE_FILE_LOGGING
+            value: "true"
+          - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+            value: ACCEPT
+          - name: FELIX_IPV6SUPPORT
+            value: "false"
+          - name: FELIX_HEALTHENABLED
+            value: "true"
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/calico-node
+                - -shutdown
+          livenessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-live
+              - -bird-live
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: calico-node
+          readinessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-ready
+              - -bird-ready
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 250m
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/etc/cni/net.d
+            name: cni-net-dir
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /var/run/calico
+            name: var-run-calico
+          - mountPath: /var/lib/calico
+            name: var-lib-calico
+          - mountPath: /var/run/nodeagent
+            name: policysync
+          - mountPath: /sys/fs/bpf
+            name: bpffs
+          - mountPath: /var/log/calico/cni
+            name: cni-log-dir
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-x68v8
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        initContainers:
+        - command:
+          - /opt/cni/bin/calico-ipam
+          - -upgrade
+          env:
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CALICO_NETWORKING_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: calico_backend
+                name: calico-config
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/cni:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: upgrade-ipam
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/cni/networks
+            name: host-local-net-dir
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin-dir
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-x68v8
+            readOnly: true
+        - command:
+          - /opt/cni/bin/install
+          env:
+          - name: CNI_CONF_NAME
+            value: 10-calico.conflist
+          - name: CNI_NETWORK_CONFIG
+            valueFrom:
+              configMapKeyRef:
+                key: cni_network_config
+                name: calico-config
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CNI_MTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: SLEEP
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/cni:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: install-cni
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin-dir
+          - mountPath: /host/etc/cni/net.d
+            name: cni-net-dir
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-x68v8
+            readOnly: true
+        - command:
+          - calico-node
+          - -init
+          - -best-effort
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: mount-bpffs
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /sys/fs
+            mountPropagation: Bidirectional
+            name: sys-fs
+          - mountPath: /var/run/calico
+            mountPropagation: Bidirectional
+            name: var-run-calico
+          - mountPath: /nodeproc
+            name: nodeproc
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-x68v8
+            readOnly: true
+        nodeName: ip-172-31-28-145
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: calico-node
+        serviceAccountName: calico-node
+        terminationGracePeriodSeconds: 0
+        tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/memory-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/pid-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/unschedulable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - hostPath:
+            path: /var/run/calico
+            type: ""
+          name: var-run-calico
+        - hostPath:
+            path: /var/lib/calico
+            type: ""
+          name: var-lib-calico
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /sys/fs/
+            type: DirectoryOrCreate
+          name: sys-fs
+        - hostPath:
+            path: /sys/fs/bpf
+            type: Directory
+          name: bpffs
+        - hostPath:
+            path: /proc
+            type: ""
+          name: nodeproc
+        - hostPath:
+            path: /opt/cni/bin
+            type: ""
+          name: cni-bin-dir
+        - hostPath:
+            path: /etc/cni/net.d
+            type: ""
+          name: cni-net-dir
+        - hostPath:
+            path: /var/log/calico/cni
+            type: ""
+          name: cni-log-dir
+        - hostPath:
+            path: /var/lib/cni/networks
+            type: ""
+          name: host-local-net-dir
+        - hostPath:
+            path: /var/run/nodeagent
+            type: DirectoryOrCreate
+          name: policysync
+        - name: kube-api-access-x68v8
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T06:32:55Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T06:33:36Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:17Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:17Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T06:32:48Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://fa1058215988ce3424d3287740b0f3594d12aa9d4e0353af92c0647d17e1c62d
+          image: docker.io/calico/node:v3.28.0
+          imageID: docker.io/calico/node@sha256:385bf6391fea031649b8575799248762a2caece86e6e3f33ffee19c0c096e6a8
+          lastState: {}
+          name: calico-node
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T06:33:36Z"
+        hostIP: 172.31.28.145
+        hostIPs:
+        - ip: 172.31.28.145
+        initContainerStatuses:
+        - containerID: containerd://3bfd71d94393a51e093c0483fe64fedaf369cabbdae5dfaad5acafab79d60b85
+          image: docker.io/calico/cni:v3.28.0
+          imageID: docker.io/calico/cni@sha256:cef0c907b8f4cadc63701d371e6f24d325795bcf0be84d6a517e33000ff35f70
+          lastState: {}
+          name: upgrade-ipam
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://3bfd71d94393a51e093c0483fe64fedaf369cabbdae5dfaad5acafab79d60b85
+              exitCode: 0
+              finishedAt: "2025-10-21T06:32:55Z"
+              reason: Completed
+              startedAt: "2025-10-21T06:32:55Z"
+        - containerID: containerd://cc270d649786252c20363c3f0e67d3a3eaa0877770db98710c16b8c8d96e6c04
+          image: docker.io/calico/cni:v3.28.0
+          imageID: docker.io/calico/cni@sha256:cef0c907b8f4cadc63701d371e6f24d325795bcf0be84d6a517e33000ff35f70
+          lastState: {}
+          name: install-cni
+          ready: true
+          restartCount: 1
+          started: false
+          state:
+            terminated:
+              containerID: containerd://cc270d649786252c20363c3f0e67d3a3eaa0877770db98710c16b8c8d96e6c04
+              exitCode: 0
+              finishedAt: "2025-10-21T06:33:28Z"
+              reason: Completed
+              startedAt: "2025-10-21T06:33:28Z"
+        - containerID: containerd://2bbbbc7021699a5aa891f1e3d2b48688d72e5c5306477c7cce715ea3603ac470
+          image: docker.io/calico/node:v3.28.0
+          imageID: docker.io/calico/node@sha256:385bf6391fea031649b8575799248762a2caece86e6e3f33ffee19c0c096e6a8
+          lastState: {}
+          name: mount-bpffs
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://2bbbbc7021699a5aa891f1e3d2b48688d72e5c5306477c7cce715ea3603ac470
+              exitCode: 0
+              finishedAt: "2025-10-21T06:33:34Z"
+              reason: Completed
+              startedAt: "2025-10-21T06:33:34Z"
+        phase: Running
+        podIP: 172.31.28.145
+        podIPs:
+        - ip: 172.31.28.145
+        qosClass: Burstable
+        startTime: "2025-10-21T06:32:50Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        creationTimestamp: "2025-10-21T06:32:39Z"
+        generateName: calico-node-
+        labels:
+          controller-revision-hash: 5ff8964bd4
+          k8s-app: calico-node
+          pod-template-generation: "1"
+        name: calico-node-ntwk2
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: DaemonSet
+          name: calico-node
+          uid: 5a251725-7564-4830-b844-758eaf73f0d7
+        resourceVersion: "250458"
+        uid: e6509a44-8788-43e2-896d-f4b945abaea2
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchFields:
+                - key: metadata.name
+                  operator: In
+                  values:
+                  - ip-172-31-25-165
+        containers:
+        - env:
+          - name: DATASTORE_TYPE
+            value: kubernetes
+          - name: WAIT_FOR_DATASTORE
+            value: "true"
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CALICO_NETWORKING_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: calico_backend
+                name: calico-config
+          - name: CLUSTER_TYPE
+            value: k8s,bgp
+          - name: IP
+            value: autodetect
+          - name: CALICO_IPV4POOL_IPIP
+            value: Always
+          - name: CALICO_IPV4POOL_VXLAN
+            value: Never
+          - name: CALICO_IPV6POOL_VXLAN
+            value: Never
+          - name: FELIX_IPINIPMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: FELIX_VXLANMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: FELIX_WIREGUARDMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: CALICO_DISABLE_FILE_LOGGING
+            value: "true"
+          - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+            value: ACCEPT
+          - name: FELIX_IPV6SUPPORT
+            value: "false"
+          - name: FELIX_HEALTHENABLED
+            value: "true"
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/calico-node
+                - -shutdown
+          livenessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-live
+              - -bird-live
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: calico-node
+          readinessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-ready
+              - -bird-ready
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 250m
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/etc/cni/net.d
+            name: cni-net-dir
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /var/run/calico
+            name: var-run-calico
+          - mountPath: /var/lib/calico
+            name: var-lib-calico
+          - mountPath: /var/run/nodeagent
+            name: policysync
+          - mountPath: /sys/fs/bpf
+            name: bpffs
+          - mountPath: /var/log/calico/cni
+            name: cni-log-dir
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-h58mn
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        initContainers:
+        - command:
+          - /opt/cni/bin/calico-ipam
+          - -upgrade
+          env:
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CALICO_NETWORKING_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: calico_backend
+                name: calico-config
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/cni:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: upgrade-ipam
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/cni/networks
+            name: host-local-net-dir
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin-dir
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-h58mn
+            readOnly: true
+        - command:
+          - /opt/cni/bin/install
+          env:
+          - name: CNI_CONF_NAME
+            value: 10-calico.conflist
+          - name: CNI_NETWORK_CONFIG
+            valueFrom:
+              configMapKeyRef:
+                key: cni_network_config
+                name: calico-config
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CNI_MTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: SLEEP
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/cni:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: install-cni
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin-dir
+          - mountPath: /host/etc/cni/net.d
+            name: cni-net-dir
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-h58mn
+            readOnly: true
+        - command:
+          - calico-node
+          - -init
+          - -best-effort
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: mount-bpffs
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /sys/fs
+            mountPropagation: Bidirectional
+            name: sys-fs
+          - mountPath: /var/run/calico
+            mountPropagation: Bidirectional
+            name: var-run-calico
+          - mountPath: /nodeproc
+            name: nodeproc
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-h58mn
+            readOnly: true
+        nodeName: ip-172-31-25-165
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: calico-node
+        serviceAccountName: calico-node
+        terminationGracePeriodSeconds: 0
+        tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/memory-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/pid-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/unschedulable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - hostPath:
+            path: /var/run/calico
+            type: ""
+          name: var-run-calico
+        - hostPath:
+            path: /var/lib/calico
+            type: ""
+          name: var-lib-calico
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /sys/fs/
+            type: DirectoryOrCreate
+          name: sys-fs
+        - hostPath:
+            path: /sys/fs/bpf
+            type: Directory
+          name: bpffs
+        - hostPath:
+            path: /proc
+            type: ""
+          name: nodeproc
+        - hostPath:
+            path: /opt/cni/bin
+            type: ""
+          name: cni-bin-dir
+        - hostPath:
+            path: /etc/cni/net.d
+            type: ""
+          name: cni-net-dir
+        - hostPath:
+            path: /var/log/calico/cni
+            type: ""
+          name: cni-log-dir
+        - hostPath:
+            path: /var/lib/cni/networks
+            type: ""
+          name: host-local-net-dir
+        - hostPath:
+            path: /var/run/nodeagent
+            type: DirectoryOrCreate
+          name: policysync
+        - name: kube-api-access-h58mn
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T06:32:47Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T06:33:27Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:19Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:19Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T06:32:39Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://c7f8949fcf7d67d32d3314a7c2fd40bdc931dc81b5172f49e47d32bcac950eca
+          image: docker.io/calico/node:v3.28.0
+          imageID: docker.io/calico/node@sha256:385bf6391fea031649b8575799248762a2caece86e6e3f33ffee19c0c096e6a8
+          lastState: {}
+          name: calico-node
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T06:33:27Z"
+        hostIP: 172.31.25.165
+        hostIPs:
+        - ip: 172.31.25.165
+        initContainerStatuses:
+        - containerID: containerd://323d8198db98764cdb98fb100309ef072ac8dfb59eeb0e28aad91e14f607af0a
+          image: docker.io/calico/cni:v3.28.0
+          imageID: docker.io/calico/cni@sha256:cef0c907b8f4cadc63701d371e6f24d325795bcf0be84d6a517e33000ff35f70
+          lastState: {}
+          name: upgrade-ipam
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://323d8198db98764cdb98fb100309ef072ac8dfb59eeb0e28aad91e14f607af0a
+              exitCode: 0
+              finishedAt: "2025-10-21T06:32:46Z"
+              reason: Completed
+              startedAt: "2025-10-21T06:32:46Z"
+        - containerID: containerd://fdffcdd95160562cea08e1a3f18f746b52db00ebc6763ff9a655f9bf9c6b68cd
+          image: docker.io/calico/cni:v3.28.0
+          imageID: docker.io/calico/cni@sha256:cef0c907b8f4cadc63701d371e6f24d325795bcf0be84d6a517e33000ff35f70
+          lastState: {}
+          name: install-cni
+          ready: true
+          restartCount: 1
+          started: false
+          state:
+            terminated:
+              containerID: containerd://fdffcdd95160562cea08e1a3f18f746b52db00ebc6763ff9a655f9bf9c6b68cd
+              exitCode: 0
+              finishedAt: "2025-10-21T06:33:20Z"
+              reason: Completed
+              startedAt: "2025-10-21T06:33:19Z"
+        - containerID: containerd://bde8d41037bc95f9ba476b5e2a6dc2181f315c0a75e799cb3cfdf7a133380fae
+          image: docker.io/calico/node:v3.28.0
+          imageID: docker.io/calico/node@sha256:385bf6391fea031649b8575799248762a2caece86e6e3f33ffee19c0c096e6a8
+          lastState: {}
+          name: mount-bpffs
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://bde8d41037bc95f9ba476b5e2a6dc2181f315c0a75e799cb3cfdf7a133380fae
+              exitCode: 0
+              finishedAt: "2025-10-21T06:33:27Z"
+              reason: Completed
+              startedAt: "2025-10-21T06:33:27Z"
+        phase: Running
+        podIP: 172.31.25.165
+        podIPs:
+        - ip: 172.31.25.165
+        qosClass: Burstable
+        startTime: "2025-10-21T06:32:40Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        creationTimestamp: "2025-10-19T04:46:39Z"
+        generateName: calico-node-
+        labels:
+          controller-revision-hash: 5ff8964bd4
+          k8s-app: calico-node
+          pod-template-generation: "1"
+        name: calico-node-tmkss
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: DaemonSet
+          name: calico-node
+          uid: 5a251725-7564-4830-b844-758eaf73f0d7
+        resourceVersion: "249445"
+        uid: 71809c9a-9669-4410-9e82-8b7192c2df61
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchFields:
+                - key: metadata.name
+                  operator: In
+                  values:
+                  - master
+        containers:
+        - env:
+          - name: DATASTORE_TYPE
+            value: kubernetes
+          - name: WAIT_FOR_DATASTORE
+            value: "true"
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CALICO_NETWORKING_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: calico_backend
+                name: calico-config
+          - name: CLUSTER_TYPE
+            value: k8s,bgp
+          - name: IP
+            value: autodetect
+          - name: CALICO_IPV4POOL_IPIP
+            value: Always
+          - name: CALICO_IPV4POOL_VXLAN
+            value: Never
+          - name: CALICO_IPV6POOL_VXLAN
+            value: Never
+          - name: FELIX_IPINIPMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: FELIX_VXLANMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: FELIX_WIREGUARDMTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: CALICO_DISABLE_FILE_LOGGING
+            value: "true"
+          - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+            value: ACCEPT
+          - name: FELIX_IPV6SUPPORT
+            value: "false"
+          - name: FELIX_HEALTHENABLED
+            value: "true"
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/calico-node
+                - -shutdown
+          livenessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-live
+              - -bird-live
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: calico-node
+          readinessProbe:
+            exec:
+              command:
+              - /bin/calico-node
+              - -felix-ready
+              - -bird-ready
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 250m
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/etc/cni/net.d
+            name: cni-net-dir
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /var/run/calico
+            name: var-run-calico
+          - mountPath: /var/lib/calico
+            name: var-lib-calico
+          - mountPath: /var/run/nodeagent
+            name: policysync
+          - mountPath: /sys/fs/bpf
+            name: bpffs
+          - mountPath: /var/log/calico/cni
+            name: cni-log-dir
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-c5zvc
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        initContainers:
+        - command:
+          - /opt/cni/bin/calico-ipam
+          - -upgrade
+          env:
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CALICO_NETWORKING_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: calico_backend
+                name: calico-config
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/cni:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: upgrade-ipam
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/cni/networks
+            name: host-local-net-dir
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin-dir
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-c5zvc
+            readOnly: true
+        - command:
+          - /opt/cni/bin/install
+          env:
+          - name: CNI_CONF_NAME
+            value: 10-calico.conflist
+          - name: CNI_NETWORK_CONFIG
+            valueFrom:
+              configMapKeyRef:
+                key: cni_network_config
+                name: calico-config
+          - name: KUBERNETES_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: CNI_MTU
+            valueFrom:
+              configMapKeyRef:
+                key: veth_mtu
+                name: calico-config
+          - name: SLEEP
+            value: "false"
+          envFrom:
+          - configMapRef:
+              name: kubernetes-services-endpoint
+              optional: true
+          image: docker.io/calico/cni:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: install-cni
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin-dir
+          - mountPath: /host/etc/cni/net.d
+            name: cni-net-dir
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-c5zvc
+            readOnly: true
+        - command:
+          - calico-node
+          - -init
+          - -best-effort
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          name: mount-bpffs
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /sys/fs
+            mountPropagation: Bidirectional
+            name: sys-fs
+          - mountPath: /var/run/calico
+            mountPropagation: Bidirectional
+            name: var-run-calico
+          - mountPath: /nodeproc
+            name: nodeproc
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-c5zvc
+            readOnly: true
+        nodeName: master
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: calico-node
+        serviceAccountName: calico-node
+        terminationGracePeriodSeconds: 0
+        tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/memory-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/pid-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/unschedulable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - hostPath:
+            path: /var/run/calico
+            type: ""
+          name: var-run-calico
+        - hostPath:
+            path: /var/lib/calico
+            type: ""
+          name: var-lib-calico
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /sys/fs/
+            type: DirectoryOrCreate
+          name: sys-fs
+        - hostPath:
+            path: /sys/fs/bpf
+            type: Directory
+          name: bpffs
+        - hostPath:
+            path: /proc
+            type: ""
+          name: nodeproc
+        - hostPath:
+            path: /opt/cni/bin
+            type: ""
+          name: cni-bin-dir
+        - hostPath:
+            path: /etc/cni/net.d
+            type: ""
+          name: cni-net-dir
+        - hostPath:
+            path: /var/log/calico/cni
+            type: ""
+          name: cni-log-dir
+        - hostPath:
+            path: /var/lib/cni/networks
+            type: ""
+          name: host-local-net-dir
+        - hostPath:
+            path: /var/run/nodeagent
+            type: DirectoryOrCreate
+          name: policysync
+        - name: kube-api-access-c5zvc
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-19T04:46:43Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-19T04:46:54Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:27Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:27Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-19T04:46:39Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://9164e9315c80076f12890930648018c3cc5ec97c98135693af794a163980c923
+          image: docker.io/calico/node:v3.28.0
+          imageID: docker.io/calico/node@sha256:385bf6391fea031649b8575799248762a2caece86e6e3f33ffee19c0c096e6a8
+          lastState: {}
+          name: calico-node
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-19T04:46:54Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        initContainerStatuses:
+        - containerID: containerd://4dd233dd0c4ef1a90e324985a6dfb7bb07311e0234aa9568dcbd826344b02269
+          image: docker.io/calico/cni:v3.28.0
+          imageID: docker.io/calico/cni@sha256:cef0c907b8f4cadc63701d371e6f24d325795bcf0be84d6a517e33000ff35f70
+          lastState: {}
+          name: upgrade-ipam
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://4dd233dd0c4ef1a90e324985a6dfb7bb07311e0234aa9568dcbd826344b02269
+              exitCode: 0
+              finishedAt: "2025-10-19T04:46:43Z"
+              reason: Completed
+              startedAt: "2025-10-19T04:46:43Z"
+        - containerID: containerd://62ca8042aceac1ed23713c7ff4df6ed440a02b75ceabb5bf1745b1c586bfb678
+          image: docker.io/calico/cni:v3.28.0
+          imageID: docker.io/calico/cni@sha256:cef0c907b8f4cadc63701d371e6f24d325795bcf0be84d6a517e33000ff35f70
+          lastState: {}
+          name: install-cni
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://62ca8042aceac1ed23713c7ff4df6ed440a02b75ceabb5bf1745b1c586bfb678
+              exitCode: 0
+              finishedAt: "2025-10-19T04:46:45Z"
+              reason: Completed
+              startedAt: "2025-10-19T04:46:45Z"
+        - containerID: containerd://349cd17477963ff26fc2e5acffa338ad7e5b48c514af8ae61d0167b9cceee6aa
+          image: docker.io/calico/node:v3.28.0
+          imageID: docker.io/calico/node@sha256:385bf6391fea031649b8575799248762a2caece86e6e3f33ffee19c0c096e6a8
+          lastState: {}
+          name: mount-bpffs
+          ready: true
+          restartCount: 0
+          started: false
+          state:
+            terminated:
+              containerID: containerd://349cd17477963ff26fc2e5acffa338ad7e5b48c514af8ae61d0167b9cceee6aa
+              exitCode: 0
+              finishedAt: "2025-10-19T04:46:51Z"
+              reason: Completed
+              startedAt: "2025-10-19T04:46:51Z"
+        phase: Running
+        podIP: 172.31.89.68
+        podIPs:
+        - ip: 172.31.89.68
+        qosClass: Burstable
+        startTime: "2025-10-19T04:46:39Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          cni.projectcalico.org/containerID: d2f5d573bdae9b97a59017dc2396d3c5c789e2dda65a9ea4843228259fcb8040
+          cni.projectcalico.org/podIP: 192.168.172.130/32
+          cni.projectcalico.org/podIPs: 192.168.172.130/32
+        creationTimestamp: "2025-10-21T08:45:44Z"
+        generateName: coredns-55cb58b774-
+        labels:
+          k8s-app: kube-dns
+          pod-template-hash: 55cb58b774
+        name: coredns-55cb58b774-ccl6b
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: ReplicaSet
+          name: coredns-55cb58b774
+          uid: b00d4830-72f5-43a6-b12c-84ce95f838d5
+        resourceVersion: "250428"
+        uid: 9e516d53-420b-4a3e-b540-ae7bd6dcb94b
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: k8s-app
+                    operator: In
+                    values:
+                    - kube-dns
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - -conf
+          - /etc/coredns/Corefile
+          image: registry.k8s.io/coredns/coredns:v1.11.3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: coredns
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 53
+            name: dns-tcp
+            protocol: TCP
+          - containerPort: 9153
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8181
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 170Mi
+            requests:
+              cpu: 100m
+              memory: 70Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/coredns
+            name: config-volume
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-f7nvc
+            readOnly: true
+        dnsPolicy: Default
+        enableServiceLinks: true
+        nodeName: ip-172-31-25-165
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000000000
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: coredns
+        serviceAccountName: coredns
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 300
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 300
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: Corefile
+              path: Corefile
+            name: coredns
+          name: config-volume
+        - name: kube-api-access-f7nvc
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:48Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:44Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:14Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:55:14Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:44Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://4a35d043b11632f2f6828bbcb06aa461232866edf29ad4a7f62412d8699fb6c2
+          image: registry.k8s.io/coredns/coredns:v1.11.3
+          imageID: registry.k8s.io/coredns/coredns@sha256:9caabbf6238b189a65d0d6e6ac138de60d6a1c419e5a341fbbb7c78382559c6e
+          lastState: {}
+          name: coredns
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:45:47Z"
+        hostIP: 172.31.25.165
+        hostIPs:
+        - ip: 172.31.25.165
+        phase: Running
+        podIP: 192.168.172.130
+        podIPs:
+        - ip: 192.168.172.130
+        qosClass: Burstable
+        startTime: "2025-10-21T08:45:44Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          cni.projectcalico.org/containerID: ddf013cb24b616c8ac3e4164ea30e77a82d2bab07621b703599eaac22cbc0931
+          cni.projectcalico.org/podIP: 192.168.219.74/32
+          cni.projectcalico.org/podIPs: 192.168.219.74/32
+        creationTimestamp: "2025-10-21T08:49:44Z"
+        generateName: coredns-55cb58b774-
+        labels:
+          k8s-app: kube-dns
+          pod-template-hash: 55cb58b774
+        name: coredns-55cb58b774-sdzgc
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: ReplicaSet
+          name: coredns-55cb58b774
+          uid: b00d4830-72f5-43a6-b12c-84ce95f838d5
+        resourceVersion: "249807"
+        uid: 271a2be5-d716-43d5-acd5-5a0f517ec9f2
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: k8s-app
+                    operator: In
+                    values:
+                    - kube-dns
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - -conf
+          - /etc/coredns/Corefile
+          image: registry.k8s.io/coredns/coredns:v1.11.3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: coredns
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 53
+            name: dns-tcp
+            protocol: TCP
+          - containerPort: 9153
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8181
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 170Mi
+            requests:
+              cpu: 100m
+              memory: 70Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/coredns
+            name: config-volume
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-txr2r
+            readOnly: true
+        dnsPolicy: Default
+        enableServiceLinks: true
+        nodeName: master
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000000000
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: coredns
+        serviceAccountName: coredns
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 300
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 300
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: Corefile
+              path: Corefile
+            name: coredns
+          name: config-volume
+        - name: kube-api-access-txr2r
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:45Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:45Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:45Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:49:44Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://2acfcc7ad5cc4b3f63a6e70b2d94fbd3bffe38cbb5cfaa53399519cc56b287ce
+          image: registry.k8s.io/coredns/coredns:v1.11.3
+          imageID: registry.k8s.io/coredns/coredns@sha256:9caabbf6238b189a65d0d6e6ac138de60d6a1c419e5a341fbbb7c78382559c6e
+          lastState: {}
+          name: coredns
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:49:45Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 192.168.219.74
+        podIPs:
+        - ip: 192.168.219.74
+        qosClass: Burstable
+        startTime: "2025-10-21T08:49:44Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          kubeadm.kubernetes.io/etcd.advertise-client-urls: https://172.31.89.68:2379
+          kubernetes.io/config.hash: bcfdc62c8be0ffd6334b8e3875210fec
+          kubernetes.io/config.mirror: bcfdc62c8be0ffd6334b8e3875210fec
+          kubernetes.io/config.seen: "2025-10-21T08:46:58.198296597Z"
+          kubernetes.io/config.source: file
+        creationTimestamp: "2025-10-21T08:46:59Z"
+        labels:
+          component: etcd
+          tier: control-plane
+        name: etcd-master
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: v1
+          controller: true
+          kind: Node
+          name: master
+          uid: b64525d6-d39a-43ac-aa14-86982d3a3710
+        resourceVersion: "249461"
+        uid: 945751a5-7452-4127-afe0-762a044af353
+      spec:
+        containers:
+        - command:
+          - etcd
+          - --advertise-client-urls=https://172.31.89.68:2379
+          - --cert-file=/etc/kubernetes/pki/etcd/server.crt
+          - --client-cert-auth=true
+          - --data-dir=/var/lib/etcd
+          - --experimental-initial-corrupt-check=true
+          - --experimental-watch-progress-notify-interval=5s
+          - --initial-advertise-peer-urls=https://172.31.89.68:2380
+          - --initial-cluster=master=https://172.31.89.68:2380
+          - --key-file=/etc/kubernetes/pki/etcd/server.key
+          - --listen-client-urls=https://127.0.0.1:2379,https://172.31.89.68:2379
+          - --listen-metrics-urls=http://127.0.0.1:2381
+          - --listen-peer-urls=https://172.31.89.68:2380
+          - --name=master
+          - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+          - --peer-client-cert-auth=true
+          - --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+          - --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+          - --snapshot-count=10000
+          - --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+          image: registry.k8s.io/etcd:3.5.16-0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 8
+            httpGet:
+              host: 127.0.0.1
+              path: /health?exclude=NOSPACE&serializable=true
+              port: 2381
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: etcd
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          startupProbe:
+            failureThreshold: 24
+            httpGet:
+              host: 127.0.0.1
+              path: /health?serializable=false
+              port: 2381
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/etcd
+            name: etcd-data
+          - mountPath: /etc/kubernetes/pki/etcd
+            name: etcd-certs
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: master
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /etc/kubernetes/pki/etcd
+            type: DirectoryOrCreate
+          name: etcd-certs
+        - hostPath:
+            path: /var/lib/etcd
+            type: DirectoryOrCreate
+          name: etcd-data
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:32Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:32Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://3c77f90b1620719c2642e6765db71f50d6069222f576de65876723e46e8f2cf7
+          image: registry.k8s.io/etcd:3.5.16-0
+          imageID: registry.k8s.io/etcd@sha256:c6a9d11cc5c04b114ccdef39a9265eeef818e3d02f5359be035ae784097fdec5
+          lastState:
+            terminated:
+              containerID: containerd://3ec692b50f5d109074a5efb451203f609bd7636034ade14078866b56fcd2f177
+              exitCode: 1
+              finishedAt: "2025-10-21T08:46:59Z"
+              reason: Error
+              startedAt: "2025-10-21T08:46:59Z"
+          name: etcd
+          ready: true
+          restartCount: 1
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:47:00Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 172.31.89.68
+        podIPs:
+        - ip: 172.31.89.68
+        qosClass: Burstable
+        startTime: "2025-10-21T08:47:24Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 172.31.89.68:6443
+          kubernetes.io/config.hash: 129d7d067798e75642da50ea4b6a22d2
+          kubernetes.io/config.mirror: 129d7d067798e75642da50ea4b6a22d2
+          kubernetes.io/config.seen: "2025-10-21T08:46:58.198287844Z"
+          kubernetes.io/config.source: file
+        creationTimestamp: "2025-10-21T08:46:59Z"
+        labels:
+          component: kube-apiserver
+          tier: control-plane
+        name: kube-apiserver-master
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: v1
+          controller: true
+          kind: Node
+          name: master
+          uid: b64525d6-d39a-43ac-aa14-86982d3a3710
+        resourceVersion: "249460"
+        uid: 9928c7a1-0167-425a-a98a-e8acab979fa4
+      spec:
+        containers:
+        - command:
+          - kube-apiserver
+          - --advertise-address=172.31.89.68
+          - --allow-privileged=true
+          - --authorization-mode=Node,RBAC
+          - --client-ca-file=/etc/kubernetes/pki/ca.crt
+          - --enable-admission-plugins=NodeRestriction
+          - --enable-bootstrap-token-auth=true
+          - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+          - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+          - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+          - --etcd-servers=https://127.0.0.1:2379
+          - --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
+          - --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
+          - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+          - --requestheader-allowed-names=front-proxy-client
+          - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+          - --requestheader-extra-headers-prefix=X-Remote-Extra-
+          - --requestheader-group-headers=X-Remote-Group
+          - --requestheader-username-headers=X-Remote-User
+          - --secure-port=6443
+          - --service-account-issuer=https://kubernetes.default.svc.cluster.local
+          - --service-account-key-file=/etc/kubernetes/pki/sa.pub
+          - --service-account-signing-key-file=/etc/kubernetes/pki/sa.key
+          - --service-cluster-ip-range=10.96.0.0/12
+          - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+          - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+          image: registry.k8s.io/kube-apiserver:v1.30.14
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 8
+            httpGet:
+              host: 172.31.89.68
+              path: /livez
+              port: 6443
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: kube-apiserver
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              host: 172.31.89.68
+              path: /readyz
+              port: 6443
+              scheme: HTTPS
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 15
+          resources:
+            requests:
+              cpu: 250m
+          startupProbe:
+            failureThreshold: 24
+            httpGet:
+              host: 172.31.89.68
+              path: /livez
+              port: 6443
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/ssl/certs
+            name: ca-certs
+            readOnly: true
+          - mountPath: /etc/ca-certificates
+            name: etc-ca-certificates
+            readOnly: true
+          - mountPath: /etc/pki
+            name: etc-pki
+            readOnly: true
+          - mountPath: /etc/kubernetes/pki
+            name: k8s-certs
+            readOnly: true
+          - mountPath: /usr/local/share/ca-certificates
+            name: usr-local-share-ca-certificates
+            readOnly: true
+          - mountPath: /usr/share/ca-certificates
+            name: usr-share-ca-certificates
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: master
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /etc/ssl/certs
+            type: DirectoryOrCreate
+          name: ca-certs
+        - hostPath:
+            path: /etc/ca-certificates
+            type: DirectoryOrCreate
+          name: etc-ca-certificates
+        - hostPath:
+            path: /etc/pki
+            type: DirectoryOrCreate
+          name: etc-pki
+        - hostPath:
+            path: /etc/kubernetes/pki
+            type: DirectoryOrCreate
+          name: k8s-certs
+        - hostPath:
+            path: /usr/local/share/ca-certificates
+            type: DirectoryOrCreate
+          name: usr-local-share-ca-certificates
+        - hostPath:
+            path: /usr/share/ca-certificates
+            type: DirectoryOrCreate
+          name: usr-share-ca-certificates
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:32Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:32Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://06378bae435aaa28af34bab636b090b6f74b82214fb3bb7d6767c5c7b2d9d3da
+          image: registry.k8s.io/kube-apiserver:v1.30.14
+          imageID: registry.k8s.io/kube-apiserver@sha256:be079fe85d6b6804b89ab4fdd6a35cd56341e99ea809881cfe37962f440dc1be
+          lastState:
+            terminated:
+              containerID: containerd://ffd69bcacfea7b75dc01d63a0ae967b6fa904de8066392d22e77be4647313ba2
+              exitCode: 1
+              finishedAt: "2025-10-21T08:46:59Z"
+              reason: Error
+              startedAt: "2025-10-21T08:46:59Z"
+          name: kube-apiserver
+          ready: true
+          restartCount: 1
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:47:00Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 172.31.89.68
+        podIPs:
+        - ip: 172.31.89.68
+        qosClass: Burstable
+        startTime: "2025-10-21T08:47:24Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          kubernetes.io/config.hash: ae4f90e7563aa4bb2201cdcd58e2660c
+          kubernetes.io/config.mirror: ae4f90e7563aa4bb2201cdcd58e2660c
+          kubernetes.io/config.seen: "2025-10-21T08:46:58.198292799Z"
+          kubernetes.io/config.source: file
+        creationTimestamp: "2025-10-21T08:46:59Z"
+        labels:
+          component: kube-controller-manager
+          tier: control-plane
+        name: kube-controller-manager-master
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: v1
+          controller: true
+          kind: Node
+          name: master
+          uid: b64525d6-d39a-43ac-aa14-86982d3a3710
+        resourceVersion: "249448"
+        uid: d738aaea-e071-43ab-82fa-30746c8bf16c
+      spec:
+        containers:
+        - command:
+          - kube-controller-manager
+          - --allocate-node-cidrs=true
+          - --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf
+          - --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf
+          - --bind-address=127.0.0.1
+          - --client-ca-file=/etc/kubernetes/pki/ca.crt
+          - --cluster-cidr=192.168.0.0/16
+          - --cluster-name=kubernetes
+          - --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+          - --cluster-signing-key-file=/etc/kubernetes/pki/ca.key
+          - --controllers=*,bootstrapsigner,tokencleaner
+          - --kubeconfig=/etc/kubernetes/controller-manager.conf
+          - --leader-elect=true
+          - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+          - --root-ca-file=/etc/kubernetes/pki/ca.crt
+          - --service-account-private-key-file=/etc/kubernetes/pki/sa.key
+          - --service-cluster-ip-range=10.96.0.0/12
+          - --use-service-account-credentials=true
+          image: registry.k8s.io/kube-controller-manager:v1.30.14
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 8
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 10257
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: kube-controller-manager
+          resources:
+            requests:
+              cpu: 200m
+          startupProbe:
+            failureThreshold: 24
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 10257
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/ssl/certs
+            name: ca-certs
+            readOnly: true
+          - mountPath: /etc/ca-certificates
+            name: etc-ca-certificates
+            readOnly: true
+          - mountPath: /etc/pki
+            name: etc-pki
+            readOnly: true
+          - mountPath: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+            name: flexvolume-dir
+          - mountPath: /etc/kubernetes/pki
+            name: k8s-certs
+            readOnly: true
+          - mountPath: /etc/kubernetes/controller-manager.conf
+            name: kubeconfig
+            readOnly: true
+          - mountPath: /usr/local/share/ca-certificates
+            name: usr-local-share-ca-certificates
+            readOnly: true
+          - mountPath: /usr/share/ca-certificates
+            name: usr-share-ca-certificates
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: master
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /etc/ssl/certs
+            type: DirectoryOrCreate
+          name: ca-certs
+        - hostPath:
+            path: /etc/ca-certificates
+            type: DirectoryOrCreate
+          name: etc-ca-certificates
+        - hostPath:
+            path: /etc/pki
+            type: DirectoryOrCreate
+          name: etc-pki
+        - hostPath:
+            path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+            type: DirectoryOrCreate
+          name: flexvolume-dir
+        - hostPath:
+            path: /etc/kubernetes/pki
+            type: DirectoryOrCreate
+          name: k8s-certs
+        - hostPath:
+            path: /etc/kubernetes/controller-manager.conf
+            type: FileOrCreate
+          name: kubeconfig
+        - hostPath:
+            path: /usr/local/share/ca-certificates
+            type: DirectoryOrCreate
+          name: usr-local-share-ca-certificates
+        - hostPath:
+            path: /usr/share/ca-certificates
+            type: DirectoryOrCreate
+          name: usr-share-ca-certificates
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:27Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:27Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://b20cbcdf38817d3334c902b5208a0f6fa94ffd99e97fbf16e391624ed43647c5
+          image: registry.k8s.io/kube-controller-manager:v1.30.14
+          imageID: registry.k8s.io/kube-controller-manager@sha256:eba41d76b6af10af941147e2b449c6d68eaa42c1fd0fc8f0ab8ec2ff0ab84964
+          lastState:
+            terminated:
+              containerID: containerd://1bd1d45f21a1dc18b90222c460fb03f32b524b845d0c8d0b50fda335652faf63
+              exitCode: 1
+              finishedAt: "2025-10-21T08:47:00Z"
+              reason: Error
+              startedAt: "2025-10-21T08:46:59Z"
+          name: kube-controller-manager
+          ready: true
+          restartCount: 1
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:47:01Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 172.31.89.68
+        podIPs:
+        - ip: 172.31.89.68
+        qosClass: Burstable
+        startTime: "2025-10-21T08:47:24Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        creationTimestamp: "2025-10-21T08:45:45Z"
+        generateName: kube-proxy-
+        labels:
+          controller-revision-hash: 66648fc774
+          k8s-app: kube-proxy
+          pod-template-generation: "2"
+        name: kube-proxy-2fw6f
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: DaemonSet
+          name: kube-proxy
+          uid: 1783d9aa-1e1b-467b-84cc-e6b8771624fe
+        resourceVersion: "249163"
+        uid: bd98d895-5b54-4c22-aadc-c37e229b0a65
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchFields:
+                - key: metadata.name
+                  operator: In
+                  values:
+                  - ip-172-31-28-145
+        containers:
+        - command:
+          - /usr/local/bin/kube-proxy
+          - --config=/var/lib/kube-proxy/config.conf
+          - --hostname-override=$(NODE_NAME)
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: registry.k8s.io/kube-proxy:v1.30.14
+          imagePullPolicy: IfNotPresent
+          name: kube-proxy
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kube-proxy
+            name: kube-proxy
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-7g66k
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: ip-172-31-28-145
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-proxy
+        serviceAccountName: kube-proxy
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/memory-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/pid-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/unschedulable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kube-proxy
+          name: kube-proxy
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - name: kube-api-access-7g66k
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:49Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:45Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:49Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:49Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:45Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://45bd45e57ff3692030fb1ebf3afc203d29ea08eae5047e94ef5bebf56a9a3ca4
+          image: registry.k8s.io/kube-proxy:v1.30.14
+          imageID: registry.k8s.io/kube-proxy@sha256:ac095b8ab9589fcd394702da0809fb3fa844beb04fe909e8df59dc141ef8b63b
+          lastState: {}
+          name: kube-proxy
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:45:48Z"
+        hostIP: 172.31.28.145
+        hostIPs:
+        - ip: 172.31.28.145
+        phase: Running
+        podIP: 172.31.28.145
+        podIPs:
+        - ip: 172.31.28.145
+        qosClass: BestEffort
+        startTime: "2025-10-21T08:45:45Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        creationTimestamp: "2025-10-21T08:45:53Z"
+        generateName: kube-proxy-
+        labels:
+          controller-revision-hash: 66648fc774
+          k8s-app: kube-proxy
+          pod-template-generation: "2"
+        name: kube-proxy-dvr65
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: DaemonSet
+          name: kube-proxy
+          uid: 1783d9aa-1e1b-467b-84cc-e6b8771624fe
+        resourceVersion: "249230"
+        uid: 82e479bd-ebad-4369-a06c-1328d9556ca0
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchFields:
+                - key: metadata.name
+                  operator: In
+                  values:
+                  - master
+        containers:
+        - command:
+          - /usr/local/bin/kube-proxy
+          - --config=/var/lib/kube-proxy/config.conf
+          - --hostname-override=$(NODE_NAME)
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: registry.k8s.io/kube-proxy:v1.30.14
+          imagePullPolicy: IfNotPresent
+          name: kube-proxy
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kube-proxy
+            name: kube-proxy
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-lslqd
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: master
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-proxy
+        serviceAccountName: kube-proxy
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/memory-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/pid-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/unschedulable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kube-proxy
+          name: kube-proxy
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - name: kube-api-access-lslqd
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:54Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:53Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:54Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:54Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:53Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://29fe7b99e8b18ada4f1de2629b5d413aab6c8c626dadda9c872414bc6ef61680
+          image: registry.k8s.io/kube-proxy:v1.30.14
+          imageID: registry.k8s.io/kube-proxy@sha256:ac095b8ab9589fcd394702da0809fb3fa844beb04fe909e8df59dc141ef8b63b
+          lastState: {}
+          name: kube-proxy
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:45:53Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 172.31.89.68
+        podIPs:
+        - ip: 172.31.89.68
+        qosClass: BestEffort
+        startTime: "2025-10-21T08:45:53Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        creationTimestamp: "2025-10-21T08:45:49Z"
+        generateName: kube-proxy-
+        labels:
+          controller-revision-hash: 66648fc774
+          k8s-app: kube-proxy
+          pod-template-generation: "2"
+        name: kube-proxy-tql98
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: DaemonSet
+          name: kube-proxy
+          uid: 1783d9aa-1e1b-467b-84cc-e6b8771624fe
+        resourceVersion: "249210"
+        uid: 8154e2dc-4bcd-4b20-8b97-24c5b99f5953
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchFields:
+                - key: metadata.name
+                  operator: In
+                  values:
+                  - ip-172-31-25-165
+        containers:
+        - command:
+          - /usr/local/bin/kube-proxy
+          - --config=/var/lib/kube-proxy/config.conf
+          - --hostname-override=$(NODE_NAME)
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: registry.k8s.io/kube-proxy:v1.30.14
+          imagePullPolicy: IfNotPresent
+          name: kube-proxy
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kube-proxy
+            name: kube-proxy
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-v8b6n
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: ip-172-31-25-165
+        nodeSelector:
+          kubernetes.io/os: linux
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-proxy
+        serviceAccountName: kube-proxy
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/disk-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/memory-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/pid-pressure
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/unschedulable
+          operator: Exists
+        - effect: NoSchedule
+          key: node.kubernetes.io/network-unavailable
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kube-proxy
+          name: kube-proxy
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - name: kube-api-access-v8b6n
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:53Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:49Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:53Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:53Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:45:49Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://ff87ff13ec6092b15aa4f06ca9c199299c8f69cf88ddaf98f35538cbd8e080bb
+          image: registry.k8s.io/kube-proxy:v1.30.14
+          imageID: registry.k8s.io/kube-proxy@sha256:ac095b8ab9589fcd394702da0809fb3fa844beb04fe909e8df59dc141ef8b63b
+          lastState: {}
+          name: kube-proxy
+          ready: true
+          restartCount: 0
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:45:52Z"
+        hostIP: 172.31.25.165
+        hostIPs:
+        - ip: 172.31.25.165
+        phase: Running
+        podIP: 172.31.25.165
+        podIPs:
+        - ip: 172.31.25.165
+        qosClass: BestEffort
+        startTime: "2025-10-21T08:45:49Z"
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        annotations:
+          kubernetes.io/config.hash: 710aa8b2b7ce2dad69f28d614946af1a
+          kubernetes.io/config.mirror: 710aa8b2b7ce2dad69f28d614946af1a
+          kubernetes.io/config.seen: "2025-10-21T08:46:58.198294364Z"
+          kubernetes.io/config.source: file
+        creationTimestamp: "2025-10-21T08:46:59Z"
+        labels:
+          component: kube-scheduler
+          tier: control-plane
+        name: kube-scheduler-master
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: v1
+          controller: true
+          kind: Node
+          name: master
+          uid: b64525d6-d39a-43ac-aa14-86982d3a3710
+        resourceVersion: "249450"
+        uid: 32bd86a4-f7ff-4938-b7c1-54311484128f
+      spec:
+        containers:
+        - command:
+          - kube-scheduler
+          - --authentication-kubeconfig=/etc/kubernetes/scheduler.conf
+          - --authorization-kubeconfig=/etc/kubernetes/scheduler.conf
+          - --bind-address=127.0.0.1
+          - --kubeconfig=/etc/kubernetes/scheduler.conf
+          - --leader-elect=true
+          image: registry.k8s.io/kube-scheduler:v1.30.14
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 8
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 10259
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: kube-scheduler
+          resources:
+            requests:
+              cpu: 100m
+          startupProbe:
+            failureThreshold: 24
+            httpGet:
+              host: 127.0.0.1
+              path: /healthz
+              port: 10259
+              scheme: HTTPS
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/kubernetes/scheduler.conf
+            name: kubeconfig
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        hostNetwork: true
+        nodeName: master
+        preemptionPolicy: PreemptLowerPriority
+        priority: 2000001000
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoExecute
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /etc/kubernetes/scheduler.conf
+            type: FileOrCreate
+          name: kubeconfig
+      status:
+        conditions:
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodReadyToStartContainers
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: Initialized
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:28Z"
+          status: "True"
+          type: Ready
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:28Z"
+          status: "True"
+          type: ContainersReady
+        - lastProbeTime: null
+          lastTransitionTime: "2025-10-21T08:47:24Z"
+          status: "True"
+          type: PodScheduled
+        containerStatuses:
+        - containerID: containerd://08159449d742c094e391689f8fa710ae17feb0a2fb1a8d9007e2ef3697b42549
+          image: registry.k8s.io/kube-scheduler:v1.30.14
+          imageID: registry.k8s.io/kube-scheduler@sha256:74a5cf9cfa9fcc2246f68c650f1f5c7add20da2145f13800fd97ba1d69fc06c8
+          lastState:
+            terminated:
+              containerID: containerd://54d3be957d01cbb2a7be61717b85476a02fc0e01230b68a8362c4e6b10cb7103
+              exitCode: 1
+              finishedAt: "2025-10-21T08:46:59Z"
+              reason: Error
+              startedAt: "2025-10-21T08:46:59Z"
+          name: kube-scheduler
+          ready: true
+          restartCount: 1
+          started: true
+          state:
+            running:
+              startedAt: "2025-10-21T08:47:00Z"
+        hostIP: 172.31.89.68
+        hostIPs:
+        - ip: 172.31.89.68
+        phase: Running
+        podIP: 172.31.89.68
+        podIPs:
+        - ip: 172.31.89.68
+        qosClass: Burstable
+        startTime: "2025-10-21T08:47:24Z"
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        creationTimestamp: "2025-10-19T04:38:08Z"
+        labels:
+          component: apiserver
+          provider: kubernetes
+        name: kubernetes
+        namespace: default
+        resourceVersion: "221"
+        uid: ff5af969-5c75-4ec8-a2c0-c81ea30c5f96
+      spec:
+        clusterIP: 10.96.0.1
+        clusterIPs:
+        - 10.96.0.1
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - name: https
+          port: 443
+          protocol: TCP
+          targetPort: 6443
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        creationTimestamp: "2025-10-20T02:31:35Z"
+        labels:
+          app: nginx
+        name: nginx
+        namespace: default
+        resourceVersion: "104952"
+        uid: 684a302b-1749-420b-9752-2eef2450e89c
+      spec:
+        clusterIP: 10.97.229.81
+        clusterIPs:
+        - 10.97.229.81
+        externalTrafficPolicy: Cluster
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - nodePort: 31930
+          port: 80
+          protocol: TCP
+          targetPort: 80
+        selector:
+          app: nginx
+        sessionAffinity: None
+        type: NodePort
+      status:
+        loadBalancer: {}
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"evershop","namespace":"evershop"},"spec":{"ports":[{"nodePort":30000,"port":3000,"targetPort":3000}],"selector":{"app":"evershop"},"type":"NodePort"}}
+        creationTimestamp: "2025-10-20T03:27:45Z"
+        name: evershop
+        namespace: evershop
+        resourceVersion: "109592"
+        uid: fadc6dc8-80c0-47c2-9535-9a54b4acfae1
+      spec:
+        clusterIP: 10.97.20.153
+        clusterIPs:
+        - 10.97.20.153
+        externalTrafficPolicy: Cluster
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - nodePort: 30000
+          port: 3000
+          protocol: TCP
+          targetPort: 3000
+        selector:
+          app: evershop
+        sessionAffinity: None
+        type: NodePort
+      status:
+        loadBalancer: {}
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"postgres","namespace":"evershop"},"spec":{"ports":[{"port":5432,"targetPort":5432}],"selector":{"app":"postgres"}}}
+        creationTimestamp: "2025-10-20T03:27:44Z"
+        name: postgres
+        namespace: evershop
+        resourceVersion: "109566"
+        uid: 58a822cb-7c40-4c6d-bb77-29ebb1411745
+      spec:
+        clusterIP: 10.102.196.141
+        clusterIPs:
+        - 10.102.196.141
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - port: 5432
+          protocol: TCP
+          targetPort: 5432
+        selector:
+          app: postgres
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        annotations:
+          prometheus.io/port: "9153"
+          prometheus.io/scrape: "true"
+        creationTimestamp: "2025-10-19T04:38:10Z"
+        labels:
+          k8s-app: kube-dns
+          kubernetes.io/cluster-service: "true"
+          kubernetes.io/name: CoreDNS
+        name: kube-dns
+        namespace: kube-system
+        resourceVersion: "279"
+        uid: 20fbf652-2f71-410b-9d8f-60abdb293be9
+      spec:
+        clusterIP: 10.96.0.10
+        clusterIPs:
+        - 10.96.0.10
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - name: dns
+          port: 53
+          protocol: UDP
+          targetPort: 53
+        - name: dns-tcp
+          port: 53
+          protocol: TCP
+          targetPort: 53
+        - name: metrics
+          port: 9153
+          protocol: TCP
+          targetPort: 9153
+        selector:
+          k8s-app: kube-dns
+        sessionAffinity: None
+        type: ClusterIP
+      status:
+        loadBalancer: {}
+    - apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        annotations:
+          deprecated.daemonset.template.generation: "1"
+          kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{},"labels":{"k8s-app":"calico-node"},"name":"calico-node","namespace":"kube-system"},"spec":{"selector":{"matchLabels":{"k8s-app":"calico-node"}},"template":{"metadata":{"labels":{"k8s-app":"calico-node"}},"spec":{"containers":[{"env":[{"name":"DATASTORE_TYPE","value":"kubernetes"},{"name":"WAIT_FOR_DATASTORE","value":"true"},{"name":"NODENAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}},{"name":"CALICO_NETWORKING_BACKEND","valueFrom":{"configMapKeyRef":{"key":"calico_backend","name":"calico-config"}}},{"name":"CLUSTER_TYPE","value":"k8s,bgp"},{"name":"IP","value":"autodetect"},{"name":"CALICO_IPV4POOL_IPIP","value":"Always"},{"name":"CALICO_IPV4POOL_VXLAN","value":"Never"},{"name":"CALICO_IPV6POOL_VXLAN","value":"Never"},{"name":"FELIX_IPINIPMTU","valueFrom":{"configMapKeyRef":{"key":"veth_mtu","name":"calico-config"}}},{"name":"FELIX_VXLANMTU","valueFrom":{"configMapKeyRef":{"key":"veth_mtu","name":"calico-config"}}},{"name":"FELIX_WIREGUARDMTU","valueFrom":{"configMapKeyRef":{"key":"veth_mtu","name":"calico-config"}}},{"name":"CALICO_DISABLE_FILE_LOGGING","value":"true"},{"name":"FELIX_DEFAULTENDPOINTTOHOSTACTION","value":"ACCEPT"},{"name":"FELIX_IPV6SUPPORT","value":"false"},{"name":"FELIX_HEALTHENABLED","value":"true"}],"envFrom":[{"configMapRef":{"name":"kubernetes-services-endpoint","optional":true}}],"image":"docker.io/calico/node:v3.28.0","imagePullPolicy":"IfNotPresent","lifecycle":{"preStop":{"exec":{"command":["/bin/calico-node","-shutdown"]}}},"livenessProbe":{"exec":{"command":["/bin/calico-node","-felix-live","-bird-live"]},"failureThreshold":6,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":10},"name":"calico-node","readinessProbe":{"exec":{"command":["/bin/calico-node","-felix-ready","-bird-ready"]},"periodSeconds":10,"timeoutSeconds":10},"resources":{"requests":{"cpu":"250m"}},"securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/host/etc/cni/net.d","name":"cni-net-dir","readOnly":false},{"mountPath":"/lib/modules","name":"lib-modules","readOnly":true},{"mountPath":"/run/xtables.lock","name":"xtables-lock","readOnly":false},{"mountPath":"/var/run/calico","name":"var-run-calico","readOnly":false},{"mountPath":"/var/lib/calico","name":"var-lib-calico","readOnly":false},{"mountPath":"/var/run/nodeagent","name":"policysync"},{"mountPath":"/sys/fs/bpf","name":"bpffs"},{"mountPath":"/var/log/calico/cni","name":"cni-log-dir","readOnly":true}]}],"hostNetwork":true,"initContainers":[{"command":["/opt/cni/bin/calico-ipam","-upgrade"],"env":[{"name":"KUBERNETES_NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}},{"name":"CALICO_NETWORKING_BACKEND","valueFrom":{"configMapKeyRef":{"key":"calico_backend","name":"calico-config"}}}],"envFrom":[{"configMapRef":{"name":"kubernetes-services-endpoint","optional":true}}],"image":"docker.io/calico/cni:v3.28.0","imagePullPolicy":"IfNotPresent","name":"upgrade-ipam","securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/var/lib/cni/networks","name":"host-local-net-dir"},{"mountPath":"/host/opt/cni/bin","name":"cni-bin-dir"}]},{"command":["/opt/cni/bin/install"],"env":[{"name":"CNI_CONF_NAME","value":"10-calico.conflist"},{"name":"CNI_NETWORK_CONFIG","valueFrom":{"configMapKeyRef":{"key":"cni_network_config","name":"calico-config"}}},{"name":"KUBERNETES_NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}},{"name":"CNI_MTU","valueFrom":{"configMapKeyRef":{"key":"veth_mtu","name":"calico-config"}}},{"name":"SLEEP","value":"false"}],"envFrom":[{"configMapRef":{"name":"kubernetes-services-endpoint","optional":true}}],"image":"docker.io/calico/cni:v3.28.0","imagePullPolicy":"IfNotPresent","name":"install-cni","securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/host/opt/cni/bin","name":"cni-bin-dir"},{"mountPath":"/host/etc/cni/net.d","name":"cni-net-dir"}]},{"command":["calico-node","-init","-best-effort"],"image":"docker.io/calico/node:v3.28.0","imagePullPolicy":"IfNotPresent","name":"mount-bpffs","securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/sys/fs","mountPropagation":"Bidirectional","name":"sys-fs"},{"mountPath":"/var/run/calico","mountPropagation":"Bidirectional","name":"var-run-calico"},{"mountPath":"/nodeproc","name":"nodeproc","readOnly":true}]}],"nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-node-critical","serviceAccountName":"calico-node","terminationGracePeriodSeconds":0,"tolerations":[{"effect":"NoSchedule","operator":"Exists"},{"key":"CriticalAddonsOnly","operator":"Exists"},{"effect":"NoExecute","operator":"Exists"}],"volumes":[{"hostPath":{"path":"/lib/modules"},"name":"lib-modules"},{"hostPath":{"path":"/var/run/calico"},"name":"var-run-calico"},{"hostPath":{"path":"/var/lib/calico"},"name":"var-lib-calico"},{"hostPath":{"path":"/run/xtables.lock","type":"FileOrCreate"},"name":"xtables-lock"},{"hostPath":{"path":"/sys/fs/","type":"DirectoryOrCreate"},"name":"sys-fs"},{"hostPath":{"path":"/sys/fs/bpf","type":"Directory"},"name":"bpffs"},{"hostPath":{"path":"/proc"},"name":"nodeproc"},{"hostPath":{"path":"/opt/cni/bin"},"name":"cni-bin-dir"},{"hostPath":{"path":"/etc/cni/net.d"},"name":"cni-net-dir"},{"hostPath":{"path":"/var/log/calico/cni"},"name":"cni-log-dir"},{"hostPath":{"path":"/var/lib/cni/networks"},"name":"host-local-net-dir"},{"hostPath":{"path":"/var/run/nodeagent","type":"DirectoryOrCreate"},"name":"policysync"}]}},"updateStrategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"}}}
+        creationTimestamp: "2025-10-19T04:46:39Z"
+        generation: 1
+        labels:
+          k8s-app: calico-node
+        name: calico-node
+        namespace: kube-system
+        resourceVersion: "250459"
+        uid: 5a251725-7564-4830-b844-758eaf73f0d7
+      spec:
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            k8s-app: calico-node
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: calico-node
+          spec:
+            containers:
+            - env:
+              - name: DATASTORE_TYPE
+                value: kubernetes
+              - name: WAIT_FOR_DATASTORE
+                value: "true"
+              - name: NODENAME
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: spec.nodeName
+              - name: CALICO_NETWORKING_BACKEND
+                valueFrom:
+                  configMapKeyRef:
+                    key: calico_backend
+                    name: calico-config
+              - name: CLUSTER_TYPE
+                value: k8s,bgp
+              - name: IP
+                value: autodetect
+              - name: CALICO_IPV4POOL_IPIP
+                value: Always
+              - name: CALICO_IPV4POOL_VXLAN
+                value: Never
+              - name: CALICO_IPV6POOL_VXLAN
+                value: Never
+              - name: FELIX_IPINIPMTU
+                valueFrom:
+                  configMapKeyRef:
+                    key: veth_mtu
+                    name: calico-config
+              - name: FELIX_VXLANMTU
+                valueFrom:
+                  configMapKeyRef:
+                    key: veth_mtu
+                    name: calico-config
+              - name: FELIX_WIREGUARDMTU
+                valueFrom:
+                  configMapKeyRef:
+                    key: veth_mtu
+                    name: calico-config
+              - name: CALICO_DISABLE_FILE_LOGGING
+                value: "true"
+              - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+                value: ACCEPT
+              - name: FELIX_IPV6SUPPORT
+                value: "false"
+              - name: FELIX_HEALTHENABLED
+                value: "true"
+              envFrom:
+              - configMapRef:
+                  name: kubernetes-services-endpoint
+                  optional: true
+              image: docker.io/calico/node:v3.28.0
+              imagePullPolicy: IfNotPresent
+              lifecycle:
+                preStop:
+                  exec:
+                    command:
+                    - /bin/calico-node
+                    - -shutdown
+              livenessProbe:
+                exec:
+                  command:
+                  - /bin/calico-node
+                  - -felix-live
+                  - -bird-live
+                failureThreshold: 6
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              name: calico-node
+              readinessProbe:
+                exec:
+                  command:
+                  - /bin/calico-node
+                  - -felix-ready
+                  - -bird-ready
+                failureThreshold: 3
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              resources:
+                requests:
+                  cpu: 250m
+              securityContext:
+                privileged: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /host/etc/cni/net.d
+                name: cni-net-dir
+              - mountPath: /lib/modules
+                name: lib-modules
+                readOnly: true
+              - mountPath: /run/xtables.lock
+                name: xtables-lock
+              - mountPath: /var/run/calico
+                name: var-run-calico
+              - mountPath: /var/lib/calico
+                name: var-lib-calico
+              - mountPath: /var/run/nodeagent
+                name: policysync
+              - mountPath: /sys/fs/bpf
+                name: bpffs
+              - mountPath: /var/log/calico/cni
+                name: cni-log-dir
+                readOnly: true
+            dnsPolicy: ClusterFirst
+            hostNetwork: true
+            initContainers:
+            - command:
+              - /opt/cni/bin/calico-ipam
+              - -upgrade
+              env:
+              - name: KUBERNETES_NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: spec.nodeName
+              - name: CALICO_NETWORKING_BACKEND
+                valueFrom:
+                  configMapKeyRef:
+                    key: calico_backend
+                    name: calico-config
+              envFrom:
+              - configMapRef:
+                  name: kubernetes-services-endpoint
+                  optional: true
+              image: docker.io/calico/cni:v3.28.0
+              imagePullPolicy: IfNotPresent
+              name: upgrade-ipam
+              resources: {}
+              securityContext:
+                privileged: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /var/lib/cni/networks
+                name: host-local-net-dir
+              - mountPath: /host/opt/cni/bin
+                name: cni-bin-dir
+            - command:
+              - /opt/cni/bin/install
+              env:
+              - name: CNI_CONF_NAME
+                value: 10-calico.conflist
+              - name: CNI_NETWORK_CONFIG
+                valueFrom:
+                  configMapKeyRef:
+                    key: cni_network_config
+                    name: calico-config
+              - name: KUBERNETES_NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: spec.nodeName
+              - name: CNI_MTU
+                valueFrom:
+                  configMapKeyRef:
+                    key: veth_mtu
+                    name: calico-config
+              - name: SLEEP
+                value: "false"
+              envFrom:
+              - configMapRef:
+                  name: kubernetes-services-endpoint
+                  optional: true
+              image: docker.io/calico/cni:v3.28.0
+              imagePullPolicy: IfNotPresent
+              name: install-cni
+              resources: {}
+              securityContext:
+                privileged: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /host/opt/cni/bin
+                name: cni-bin-dir
+              - mountPath: /host/etc/cni/net.d
+                name: cni-net-dir
+            - command:
+              - calico-node
+              - -init
+              - -best-effort
+              image: docker.io/calico/node:v3.28.0
+              imagePullPolicy: IfNotPresent
+              name: mount-bpffs
+              resources: {}
+              securityContext:
+                privileged: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /sys/fs
+                mountPropagation: Bidirectional
+                name: sys-fs
+              - mountPath: /var/run/calico
+                mountPropagation: Bidirectional
+                name: var-run-calico
+              - mountPath: /nodeproc
+                name: nodeproc
+                readOnly: true
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-node-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: calico-node
+            serviceAccountName: calico-node
+            terminationGracePeriodSeconds: 0
+            tolerations:
+            - effect: NoSchedule
+              operator: Exists
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - effect: NoExecute
+              operator: Exists
+            volumes:
+            - hostPath:
+                path: /lib/modules
+                type: ""
+              name: lib-modules
+            - hostPath:
+                path: /var/run/calico
+                type: ""
+              name: var-run-calico
+            - hostPath:
+                path: /var/lib/calico
+                type: ""
+              name: var-lib-calico
+            - hostPath:
+                path: /run/xtables.lock
+                type: FileOrCreate
+              name: xtables-lock
+            - hostPath:
+                path: /sys/fs/
+                type: DirectoryOrCreate
+              name: sys-fs
+            - hostPath:
+                path: /sys/fs/bpf
+                type: Directory
+              name: bpffs
+            - hostPath:
+                path: /proc
+                type: ""
+              name: nodeproc
+            - hostPath:
+                path: /opt/cni/bin
+                type: ""
+              name: cni-bin-dir
+            - hostPath:
+                path: /etc/cni/net.d
+                type: ""
+              name: cni-net-dir
+            - hostPath:
+                path: /var/log/calico/cni
+                type: ""
+              name: cni-log-dir
+            - hostPath:
+                path: /var/lib/cni/networks
+                type: ""
+              name: host-local-net-dir
+            - hostPath:
+                path: /var/run/nodeagent
+                type: DirectoryOrCreate
+              name: policysync
+        updateStrategy:
+          rollingUpdate:
+            maxSurge: 0
+            maxUnavailable: 1
+          type: RollingUpdate
+      status:
+        currentNumberScheduled: 3
+        desiredNumberScheduled: 3
+        numberAvailable: 3
+        numberMisscheduled: 0
+        numberReady: 3
+        observedGeneration: 1
+        updatedNumberScheduled: 3
+    - apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        annotations:
+          deprecated.daemonset.template.generation: "2"
+        creationTimestamp: "2025-10-19T04:38:10Z"
+        generation: 2
+        labels:
+          k8s-app: kube-proxy
+        name: kube-proxy
+        namespace: kube-system
+        resourceVersion: "249231"
+        uid: 1783d9aa-1e1b-467b-84cc-e6b8771624fe
+      spec:
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            k8s-app: kube-proxy
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: kube-proxy
+          spec:
+            containers:
+            - command:
+              - /usr/local/bin/kube-proxy
+              - --config=/var/lib/kube-proxy/config.conf
+              - --hostname-override=$(NODE_NAME)
+              env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: spec.nodeName
+              image: registry.k8s.io/kube-proxy:v1.30.14
+              imagePullPolicy: IfNotPresent
+              name: kube-proxy
+              resources: {}
+              securityContext:
+                privileged: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /var/lib/kube-proxy
+                name: kube-proxy
+              - mountPath: /run/xtables.lock
+                name: xtables-lock
+              - mountPath: /lib/modules
+                name: lib-modules
+                readOnly: true
+            dnsPolicy: ClusterFirst
+            hostNetwork: true
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-node-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: kube-proxy
+            serviceAccountName: kube-proxy
+            terminationGracePeriodSeconds: 30
+            tolerations:
+            - operator: Exists
+            volumes:
+            - configMap:
+                defaultMode: 420
+                name: kube-proxy
+              name: kube-proxy
+            - hostPath:
+                path: /run/xtables.lock
+                type: FileOrCreate
+              name: xtables-lock
+            - hostPath:
+                path: /lib/modules
+                type: ""
+              name: lib-modules
+        updateStrategy:
+          rollingUpdate:
+            maxSurge: 0
+            maxUnavailable: 1
+          type: RollingUpdate
+      status:
+        currentNumberScheduled: 3
+        desiredNumberScheduled: 3
+        numberAvailable: 3
+        numberMisscheduled: 0
+        numberReady: 3
+        observedGeneration: 2
+        updatedNumberScheduled: 3
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          deployment.kubernetes.io/revision: "1"
+        creationTimestamp: "2025-10-20T02:31:09Z"
+        generation: 1
+        labels:
+          app: nginx
+        name: nginx
+        namespace: default
+        resourceVersion: "249869"
+        uid: 5a83a935-28a3-4a5f-8353-3de2dde7ff3b
+      spec:
+        progressDeadlineSeconds: 600
+        replicas: 1
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            app: nginx
+        strategy:
+          rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 25%
+          type: RollingUpdate
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              app: nginx
+          spec:
+            containers:
+            - image: nginx
+              imagePullPolicy: Always
+              name: nginx
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+      status:
+        availableReplicas: 1
+        conditions:
+        - lastTransitionTime: "2025-10-20T02:31:09Z"
+          lastUpdateTime: "2025-10-20T02:31:14Z"
+          message: ReplicaSet "nginx-7854ff8877" has successfully progressed.
+          reason: NewReplicaSetAvailable
+          status: "True"
+          type: Progressing
+        - lastTransitionTime: "2025-10-21T08:50:05Z"
+          lastUpdateTime: "2025-10-21T08:50:05Z"
+          message: Deployment has minimum availability.
+          reason: MinimumReplicasAvailable
+          status: "True"
+          type: Available
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+        updatedReplicas: 1
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          deployment.kubernetes.io/revision: "1"
+          kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"evershop","namespace":"evershop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"evershop"}},"template":{"metadata":{"labels":{"app":"evershop"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","value":"postgres"},{"name":"DB_PORT","value":"5432"},{"name":"DB_USER","value":"postgres"},{"name":"DB_PASSWORD","value":"postgres"},{"name":"DB_NAME","value":"postgres"}],"image":"evershop/evershop:latest","livenessProbe":{"httpGet":{"path":"/","port":3000},"initialDelaySeconds":60,"periodSeconds":10},"name":"evershop","ports":[{"containerPort":3000}],"readinessProbe":{"httpGet":{"path":"/","port":3000},"initialDelaySeconds":30,"periodSeconds":5},"resources":{"limits":{"cpu":"500m","memory":"1Gi"},"requests":{"cpu":"250m","memory":"512Mi"}}}]}}}}
+        creationTimestamp: "2025-10-20T03:27:44Z"
+        generation: 1
+        name: evershop
+        namespace: evershop
+        resourceVersion: "250452"
+        uid: d93b8933-1463-4432-803b-cb3a321a5ac0
+      spec:
+        progressDeadlineSeconds: 600
+        replicas: 1
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            app: evershop
+        strategy:
+          rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 25%
+          type: RollingUpdate
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              app: evershop
+          spec:
+            containers:
+            - env:
+              - name: DB_HOST
+                value: postgres
+              - name: DB_PORT
+                value: "5432"
+              - name: DB_USER
+                value: postgres
+              - name: DB_PASSWORD
+                value: postgres
+              - name: DB_NAME
+                value: postgres
+              image: evershop/evershop:latest
+              imagePullPolicy: Always
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 3000
+                  scheme: HTTP
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              name: evershop
+              ports:
+              - containerPort: 3000
+                protocol: TCP
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 3000
+                  scheme: HTTP
+                initialDelaySeconds: 30
+                periodSeconds: 5
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 1Gi
+                requests:
+                  cpu: 250m
+                  memory: 512Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+      status:
+        availableReplicas: 1
+        conditions:
+        - lastTransitionTime: "2025-10-20T03:27:45Z"
+          lastUpdateTime: "2025-10-20T03:28:30Z"
+          message: ReplicaSet "evershop-577fd77b7d" has successfully progressed.
+          reason: NewReplicaSetAvailable
+          status: "True"
+          type: Progressing
+        - lastTransitionTime: "2025-10-21T08:55:17Z"
+          lastUpdateTime: "2025-10-21T08:55:17Z"
+          message: Deployment has minimum availability.
+          reason: MinimumReplicasAvailable
+          status: "True"
+          type: Available
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+        updatedReplicas: 1
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          deployment.kubernetes.io/revision: "1"
+          kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"postgres","namespace":"evershop"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"postgres"}},"template":{"metadata":{"labels":{"app":"postgres"}},"spec":{"containers":[{"env":[{"name":"POSTGRES_USER","value":"postgres"},{"name":"POSTGRES_PASSWORD","value":"postgres"},{"name":"POSTGRES_DB","value":"postgres"},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"}],"image":"postgres:16","name":"postgres","ports":[{"containerPort":5432}],"volumeMounts":[{"mountPath":"/var/lib/postgresql/data","name":"postgres-storage"}]}],"volumes":[{"hostPath":{"path":"/mnt/data/postgres","type":"DirectoryOrCreate"},"name":"postgres-storage"}]}}}}
+        creationTimestamp: "2025-10-20T03:27:44Z"
+        generation: 1
+        name: postgres
+        namespace: evershop
+        resourceVersion: "249895"
+        uid: 5a1e48d8-d036-4278-9cd1-5adbb2ae92aa
+      spec:
+        progressDeadlineSeconds: 600
+        replicas: 1
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            app: postgres
+        strategy:
+          rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 25%
+          type: RollingUpdate
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              app: postgres
+          spec:
+            containers:
+            - env:
+              - name: POSTGRES_USER
+                value: postgres
+              - name: POSTGRES_PASSWORD
+                value: postgres
+              - name: POSTGRES_DB
+                value: postgres
+              - name: PGDATA
+                value: /var/lib/postgresql/data/pgdata
+              image: postgres:16
+              imagePullPolicy: IfNotPresent
+              name: postgres
+              ports:
+              - containerPort: 5432
+                protocol: TCP
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /var/lib/postgresql/data
+                name: postgres-storage
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+            volumes:
+            - hostPath:
+                path: /mnt/data/postgres
+                type: DirectoryOrCreate
+              name: postgres-storage
+      status:
+        availableReplicas: 1
+        conditions:
+        - lastTransitionTime: "2025-10-20T03:27:44Z"
+          lastUpdateTime: "2025-10-20T03:27:52Z"
+          message: ReplicaSet "postgres-ffc667b5d" has successfully progressed.
+          reason: NewReplicaSetAvailable
+          status: "True"
+          type: Progressing
+        - lastTransitionTime: "2025-10-21T08:50:13Z"
+          lastUpdateTime: "2025-10-21T08:50:13Z"
+          message: Deployment has minimum availability.
+          reason: MinimumReplicasAvailable
+          status: "True"
+          type: Available
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+        updatedReplicas: 1
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          deployment.kubernetes.io/revision: "1"
+          kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"k8s-app":"calico-kube-controllers"},"name":"calico-kube-controllers","namespace":"kube-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"k8s-app":"calico-kube-controllers"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"k8s-app":"calico-kube-controllers"},"name":"calico-kube-controllers","namespace":"kube-system"},"spec":{"containers":[{"env":[{"name":"ENABLED_CONTROLLERS","value":"node"},{"name":"DATASTORE_TYPE","value":"kubernetes"}],"image":"docker.io/calico/kube-controllers:v3.28.0","imagePullPolicy":"IfNotPresent","livenessProbe":{"exec":{"command":["/usr/bin/check-status","-l"]},"failureThreshold":6,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":10},"name":"calico-kube-controllers","readinessProbe":{"exec":{"command":["/usr/bin/check-status","-r"]},"periodSeconds":10}}],"nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-cluster-critical","serviceAccountName":"calico-kube-controllers","tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/master"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/control-plane"}]}}}}
+        creationTimestamp: "2025-10-19T04:46:39Z"
+        generation: 1
+        labels:
+          k8s-app: calico-kube-controllers
+        name: calico-kube-controllers
+        namespace: kube-system
+        resourceVersion: "249815"
+        uid: 789c9f37-682e-43b8-8bed-548ae50d1d50
+      spec:
+        progressDeadlineSeconds: 600
+        replicas: 1
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            k8s-app: calico-kube-controllers
+        strategy:
+          type: Recreate
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: calico-kube-controllers
+            name: calico-kube-controllers
+            namespace: kube-system
+          spec:
+            containers:
+            - env:
+              - name: ENABLED_CONTROLLERS
+                value: node
+              - name: DATASTORE_TYPE
+                value: kubernetes
+              image: docker.io/calico/kube-controllers:v3.28.0
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                exec:
+                  command:
+                  - /usr/bin/check-status
+                  - -l
+                failureThreshold: 6
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              name: calico-kube-controllers
+              readinessProbe:
+                exec:
+                  command:
+                  - /usr/bin/check-status
+                  - -r
+                failureThreshold: 3
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-cluster-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: calico-kube-controllers
+            serviceAccountName: calico-kube-controllers
+            terminationGracePeriodSeconds: 30
+            tolerations:
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/master
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+      status:
+        availableReplicas: 1
+        conditions:
+        - lastTransitionTime: "2025-10-19T04:46:39Z"
+          lastUpdateTime: "2025-10-19T04:46:58Z"
+          message: ReplicaSet "calico-kube-controllers-8d76c5f9b" has successfully progressed.
+          reason: NewReplicaSetAvailable
+          status: "True"
+          type: Progressing
+        - lastTransitionTime: "2025-10-21T08:49:45Z"
+          lastUpdateTime: "2025-10-21T08:49:45Z"
+          message: Deployment has minimum availability.
+          reason: MinimumReplicasAvailable
+          status: "True"
+          type: Available
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+        updatedReplicas: 1
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          deployment.kubernetes.io/revision: "2"
+        creationTimestamp: "2025-10-19T04:38:10Z"
+        generation: 2
+        labels:
+          k8s-app: kube-dns
+        name: coredns
+        namespace: kube-system
+        resourceVersion: "250433"
+        uid: 848a6cec-96a6-4e21-a704-972c5c950ca3
+      spec:
+        progressDeadlineSeconds: 600
+        replicas: 2
+        revisionHistoryLimit: 10
+        selector:
+          matchLabels:
+            k8s-app: kube-dns
+        strategy:
+          rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 1
+          type: RollingUpdate
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: kube-dns
+          spec:
+            affinity:
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                      - key: k8s-app
+                        operator: In
+                        values:
+                        - kube-dns
+                    topologyKey: kubernetes.io/hostname
+                  weight: 100
+            containers:
+            - args:
+              - -conf
+              - /etc/coredns/Corefile
+              image: registry.k8s.io/coredns/coredns:v1.11.3
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                failureThreshold: 5
+                httpGet:
+                  path: /health
+                  port: 8080
+                  scheme: HTTP
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 5
+              name: coredns
+              ports:
+              - containerPort: 53
+                name: dns
+                protocol: UDP
+              - containerPort: 53
+                name: dns-tcp
+                protocol: TCP
+              - containerPort: 9153
+                name: metrics
+                protocol: TCP
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /ready
+                  port: 8181
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources:
+                limits:
+                  memory: 170Mi
+                requests:
+                  cpu: 100m
+                  memory: 70Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                  - NET_BIND_SERVICE
+                  drop:
+                  - ALL
+                readOnlyRootFilesystem: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /etc/coredns
+                name: config-volume
+                readOnly: true
+            dnsPolicy: Default
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-cluster-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: coredns
+            serviceAccountName: coredns
+            terminationGracePeriodSeconds: 30
+            tolerations:
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+            volumes:
+            - configMap:
+                defaultMode: 420
+                items:
+                - key: Corefile
+                  path: Corefile
+                name: coredns
+              name: config-volume
+      status:
+        availableReplicas: 2
+        conditions:
+        - lastTransitionTime: "2025-10-21T07:12:38Z"
+          lastUpdateTime: "2025-10-21T07:12:38Z"
+          message: Deployment has minimum availability.
+          reason: MinimumReplicasAvailable
+          status: "True"
+          type: Available
+        - lastTransitionTime: "2025-10-19T04:38:24Z"
+          lastUpdateTime: "2025-10-21T08:45:48Z"
+          message: ReplicaSet "coredns-55cb58b774" has successfully progressed.
+          reason: NewReplicaSetAvailable
+          status: "True"
+          type: Progressing
+        observedGeneration: 2
+        readyReplicas: 2
+        replicas: 2
+        updatedReplicas: 2
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      metadata:
+        annotations:
+          deployment.kubernetes.io/desired-replicas: "1"
+          deployment.kubernetes.io/max-replicas: "2"
+          deployment.kubernetes.io/revision: "1"
+        creationTimestamp: "2025-10-20T02:31:09Z"
+        generation: 1
+        labels:
+          app: nginx
+          pod-template-hash: 7854ff8877
+        name: nginx-7854ff8877
+        namespace: default
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: Deployment
+          name: nginx
+          uid: 5a83a935-28a3-4a5f-8353-3de2dde7ff3b
+        resourceVersion: "249868"
+        uid: 26a94c39-268a-403e-8c97-7dad7d7037a7
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: nginx
+            pod-template-hash: 7854ff8877
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              app: nginx
+              pod-template-hash: 7854ff8877
+          spec:
+            containers:
+            - image: nginx
+              imagePullPolicy: Always
+              name: nginx
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+      status:
+        availableReplicas: 1
+        fullyLabeledReplicas: 1
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      metadata:
+        annotations:
+          deployment.kubernetes.io/desired-replicas: "1"
+          deployment.kubernetes.io/max-replicas: "2"
+          deployment.kubernetes.io/revision: "1"
+        creationTimestamp: "2025-10-20T03:27:45Z"
+        generation: 1
+        labels:
+          app: evershop
+          pod-template-hash: 577fd77b7d
+        name: evershop-577fd77b7d
+        namespace: evershop
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: Deployment
+          name: evershop
+          uid: d93b8933-1463-4432-803b-cb3a321a5ac0
+        resourceVersion: "250451"
+        uid: fe812631-26a8-42c3-9a91-e9623cb4904a
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: evershop
+            pod-template-hash: 577fd77b7d
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              app: evershop
+              pod-template-hash: 577fd77b7d
+          spec:
+            containers:
+            - env:
+              - name: DB_HOST
+                value: postgres
+              - name: DB_PORT
+                value: "5432"
+              - name: DB_USER
+                value: postgres
+              - name: DB_PASSWORD
+                value: postgres
+              - name: DB_NAME
+                value: postgres
+              image: evershop/evershop:latest
+              imagePullPolicy: Always
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 3000
+                  scheme: HTTP
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              name: evershop
+              ports:
+              - containerPort: 3000
+                protocol: TCP
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: 3000
+                  scheme: HTTP
+                initialDelaySeconds: 30
+                periodSeconds: 5
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 1Gi
+                requests:
+                  cpu: 250m
+                  memory: 512Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+      status:
+        availableReplicas: 1
+        fullyLabeledReplicas: 1
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      metadata:
+        annotations:
+          deployment.kubernetes.io/desired-replicas: "1"
+          deployment.kubernetes.io/max-replicas: "2"
+          deployment.kubernetes.io/revision: "1"
+        creationTimestamp: "2025-10-20T03:27:44Z"
+        generation: 1
+        labels:
+          app: postgres
+          pod-template-hash: ffc667b5d
+        name: postgres-ffc667b5d
+        namespace: evershop
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: Deployment
+          name: postgres
+          uid: 5a1e48d8-d036-4278-9cd1-5adbb2ae92aa
+        resourceVersion: "249894"
+        uid: 0026de59-4fff-4c73-861c-7c923517e5d9
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: postgres
+            pod-template-hash: ffc667b5d
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              app: postgres
+              pod-template-hash: ffc667b5d
+          spec:
+            containers:
+            - env:
+              - name: POSTGRES_USER
+                value: postgres
+              - name: POSTGRES_PASSWORD
+                value: postgres
+              - name: POSTGRES_DB
+                value: postgres
+              - name: PGDATA
+                value: /var/lib/postgresql/data/pgdata
+              image: postgres:16
+              imagePullPolicy: IfNotPresent
+              name: postgres
+              ports:
+              - containerPort: 5432
+                protocol: TCP
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /var/lib/postgresql/data
+                name: postgres-storage
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            terminationGracePeriodSeconds: 30
+            volumes:
+            - hostPath:
+                path: /mnt/data/postgres
+                type: DirectoryOrCreate
+              name: postgres-storage
+      status:
+        availableReplicas: 1
+        fullyLabeledReplicas: 1
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      metadata:
+        annotations:
+          deployment.kubernetes.io/desired-replicas: "1"
+          deployment.kubernetes.io/max-replicas: "1"
+          deployment.kubernetes.io/revision: "1"
+        creationTimestamp: "2025-10-19T04:46:39Z"
+        generation: 1
+        labels:
+          k8s-app: calico-kube-controllers
+          pod-template-hash: 8d76c5f9b
+        name: calico-kube-controllers-8d76c5f9b
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: Deployment
+          name: calico-kube-controllers
+          uid: 789c9f37-682e-43b8-8bed-548ae50d1d50
+        resourceVersion: "249814"
+        uid: e29afd7c-d8f2-4c54-8820-316c88d18860
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            k8s-app: calico-kube-controllers
+            pod-template-hash: 8d76c5f9b
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: calico-kube-controllers
+              pod-template-hash: 8d76c5f9b
+            name: calico-kube-controllers
+            namespace: kube-system
+          spec:
+            containers:
+            - env:
+              - name: ENABLED_CONTROLLERS
+                value: node
+              - name: DATASTORE_TYPE
+                value: kubernetes
+              image: docker.io/calico/kube-controllers:v3.28.0
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                exec:
+                  command:
+                  - /usr/bin/check-status
+                  - -l
+                failureThreshold: 6
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 10
+              name: calico-kube-controllers
+              readinessProbe:
+                exec:
+                  command:
+                  - /usr/bin/check-status
+                  - -r
+                failureThreshold: 3
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+            dnsPolicy: ClusterFirst
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-cluster-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: calico-kube-controllers
+            serviceAccountName: calico-kube-controllers
+            terminationGracePeriodSeconds: 30
+            tolerations:
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/master
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+      status:
+        availableReplicas: 1
+        fullyLabeledReplicas: 1
+        observedGeneration: 1
+        readyReplicas: 1
+        replicas: 1
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      metadata:
+        annotations:
+          deployment.kubernetes.io/desired-replicas: "2"
+          deployment.kubernetes.io/max-replicas: "3"
+          deployment.kubernetes.io/revision: "2"
+        creationTimestamp: "2025-10-21T08:45:44Z"
+        generation: 2
+        labels:
+          k8s-app: kube-dns
+          pod-template-hash: 55cb58b774
+        name: coredns-55cb58b774
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: Deployment
+          name: coredns
+          uid: 848a6cec-96a6-4e21-a704-972c5c950ca3
+        resourceVersion: "250432"
+        uid: b00d4830-72f5-43a6-b12c-84ce95f838d5
+      spec:
+        replicas: 2
+        selector:
+          matchLabels:
+            k8s-app: kube-dns
+            pod-template-hash: 55cb58b774
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: kube-dns
+              pod-template-hash: 55cb58b774
+          spec:
+            affinity:
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                      - key: k8s-app
+                        operator: In
+                        values:
+                        - kube-dns
+                    topologyKey: kubernetes.io/hostname
+                  weight: 100
+            containers:
+            - args:
+              - -conf
+              - /etc/coredns/Corefile
+              image: registry.k8s.io/coredns/coredns:v1.11.3
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                failureThreshold: 5
+                httpGet:
+                  path: /health
+                  port: 8080
+                  scheme: HTTP
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 5
+              name: coredns
+              ports:
+              - containerPort: 53
+                name: dns
+                protocol: UDP
+              - containerPort: 53
+                name: dns-tcp
+                protocol: TCP
+              - containerPort: 9153
+                name: metrics
+                protocol: TCP
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /ready
+                  port: 8181
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources:
+                limits:
+                  memory: 170Mi
+                requests:
+                  cpu: 100m
+                  memory: 70Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                  - NET_BIND_SERVICE
+                  drop:
+                  - ALL
+                readOnlyRootFilesystem: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /etc/coredns
+                name: config-volume
+                readOnly: true
+            dnsPolicy: Default
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-cluster-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: coredns
+            serviceAccountName: coredns
+            terminationGracePeriodSeconds: 30
+            tolerations:
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+            volumes:
+            - configMap:
+                defaultMode: 420
+                items:
+                - key: Corefile
+                  path: Corefile
+                name: coredns
+              name: config-volume
+      status:
+        availableReplicas: 2
+        fullyLabeledReplicas: 2
+        observedGeneration: 2
+        readyReplicas: 2
+        replicas: 2
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      metadata:
+        annotations:
+          deployment.kubernetes.io/desired-replicas: "2"
+          deployment.kubernetes.io/max-replicas: "3"
+          deployment.kubernetes.io/revision: "1"
+        creationTimestamp: "2025-10-19T04:38:24Z"
+        generation: 3
+        labels:
+          k8s-app: kube-dns
+          pod-template-hash: 76f75df574
+        name: coredns-76f75df574
+        namespace: kube-system
+        ownerReferences:
+        - apiVersion: apps/v1
+          blockOwnerDeletion: true
+          controller: true
+          kind: Deployment
+          name: coredns
+          uid: 848a6cec-96a6-4e21-a704-972c5c950ca3
+        resourceVersion: "249142"
+        uid: abc2ce84-f65e-4acb-b4d2-2ca2e662a288
+      spec:
+        replicas: 0
+        selector:
+          matchLabels:
+            k8s-app: kube-dns
+            pod-template-hash: 76f75df574
+        template:
+          metadata:
+            creationTimestamp: null
+            labels:
+              k8s-app: kube-dns
+              pod-template-hash: 76f75df574
+          spec:
+            affinity:
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                      - key: k8s-app
+                        operator: In
+                        values:
+                        - kube-dns
+                    topologyKey: kubernetes.io/hostname
+                  weight: 100
+            containers:
+            - args:
+              - -conf
+              - /etc/coredns/Corefile
+              image: registry.k8s.io/coredns/coredns:v1.11.1
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                failureThreshold: 5
+                httpGet:
+                  path: /health
+                  port: 8080
+                  scheme: HTTP
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 5
+              name: coredns
+              ports:
+              - containerPort: 53
+                name: dns
+                protocol: UDP
+              - containerPort: 53
+                name: dns-tcp
+                protocol: TCP
+              - containerPort: 9153
+                name: metrics
+                protocol: TCP
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /ready
+                  port: 8181
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources:
+                limits:
+                  memory: 170Mi
+                requests:
+                  cpu: 100m
+                  memory: 70Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                  - NET_BIND_SERVICE
+                  drop:
+                  - ALL
+                readOnlyRootFilesystem: true
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /etc/coredns
+                name: config-volume
+                readOnly: true
+            dnsPolicy: Default
+            nodeSelector:
+              kubernetes.io/os: linux
+            priorityClassName: system-cluster-critical
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            securityContext: {}
+            serviceAccount: coredns
+            serviceAccountName: coredns
+            terminationGracePeriodSeconds: 30
+            tolerations:
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+            volumes:
+            - configMap:
+                defaultMode: 420
+                items:
+                - key: Corefile
+                  path: Corefile
+                name: coredns
+              name: config-volume
+      status:
+        observedGeneration: 3
+        replicas: 0
+    kind: List
+    metadata:
+      resourceVersion: ""
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-10-21T09:00:43Z"
+  name: post-upgrade-complete
+  namespace: upgrade-docs
+  resourceVersion: "250953"
+  uid: 15473461-9a10-4b94-b424-0545acf644e0
