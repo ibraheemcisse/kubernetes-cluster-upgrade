@@ -1,0 +1,12 @@
+name: Validate Kubernetes Configs
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate YAML files
+        run: |
+          find . -name "*.yaml" -o -name "*.yml" | xargs -I {} yamllint {}
